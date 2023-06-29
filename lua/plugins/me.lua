@@ -171,9 +171,18 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
         gopls = {},
         golangci_lint_ls = {},
+        yamlls = {
+          schemas = {
+            ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
+            ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+            ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+            ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+            ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
+          },
+        },
       },
     },
   },
