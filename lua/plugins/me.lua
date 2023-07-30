@@ -140,6 +140,13 @@ return {
       codewindow.apply_default_keybinds()
     end
   },
+  -- comment code
+  {
+    "terrortylor/nvim-comment",
+    config = function()
+      require('nvim_comment').setup()
+    end
+  },
   -- treesitter parsers
   {
     "nvim-treesitter/nvim-treesitter",
@@ -230,7 +237,9 @@ return {
         width = 35,
       },
       filesystem = {
-        follow_current_file = true,
+        follow_current_file = {
+          enabled = true,
+        },
         hijack_netrw_behavior = "open_current",
         use_libuv_file_watcher = true,
         filtered_items = {

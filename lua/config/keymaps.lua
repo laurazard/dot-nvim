@@ -15,7 +15,6 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
-map("n", "<m>", "", { desc = "Minimap" })
 map("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", { desc = "TMUX Down" })
 map("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", { desc = "TMUX Up" })
 map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", { desc = "TMUX Left" })
