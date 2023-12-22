@@ -31,14 +31,34 @@ local catcoffee = {
 
 return {
   ------- Theming
+  -- {
+  --   "goolord/alpha-nvim",
+  --   opts = function(_, opts)
+  --     -- customize the dashboard header
+  --     opts.section.header.val = catcoffee
+  --     opts.config.layout[1].val = vim.fn.max { 3, vim.fn.floor(vim.fn.winheight(0) * 0.1) }
+  --     opts.config.layout[3].val = 3
+  --     opts.config.opts.noautocmd = true
+  --     return opts
+  --   end,
+  -- },
   {
-    "goolord/alpha-nvim",
+    "nvimdev/dashboard-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
-      opts.section.header.val = catcoffee
-      opts.config.layout[1].val = vim.fn.max { 3, vim.fn.floor(vim.fn.winheight(0) * 0.1) }
-      opts.config.layout[3].val = 3
-      opts.config.opts.noautocmd = true
+      local space_above = vim.fn.max { 3, vim.fn.floor(vim.fn.winheight(0) * 0.1) }
+      local space_below = 3
+      local header = {}
+      for i = 0, space_above do
+        table.insert(header, "")
+      end
+      for i = 1, #catcoffee do
+        table.insert(header, catcoffee[i])
+      end
+      for i = 0, space_below do
+        table.insert(header, "")
+      end
+      opts.config.header = header
       return opts
     end,
   },
@@ -120,7 +140,7 @@ return {
           delay = 50,
           animation = require('mini.indentscope').gen_animation.none()
         },
-        symbol = "|"
+        symbol = "│"
       })
     end
   },
@@ -176,10 +196,35 @@ return {
     "neovim/nvim-lspconfig",
     ---@class PluginLspOpts
     opts = {
+      -- options for vim.diagnostic.config()
+      diagnostics = {
+        underline = true,
+        update_in_insert = false,
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+          -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+          -- prefix = "icons",
+        },
+        severity_sort = true,
+      },
+      -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
+      -- Be aware that you also will need to properly configure your LSP server to
+      -- provide the inlay hints.
+      inlay_hints = {
+        enabled = false,
+      },
       ---@type lspconfig.options
       servers = {
         gopls = {},
-        golangci_lint_ls = {},
+        golangci_lint_ls = {
+          cmd = { "golangci-lint-langserver", "-debug" },
+          init_options = {
+            command = { "golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1" },
+          },
+        },
         yamlls = {
           schemas = {
             ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
@@ -187,7 +232,8 @@ return {
             ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
             ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
             ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
+            "*compose*.{yml,yaml}",
           },
         },
       },
