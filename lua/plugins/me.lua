@@ -46,7 +46,7 @@ return {
     "nvimdev/dashboard-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
-      local space_above = vim.fn.max { 3, vim.fn.floor(vim.fn.winheight(0) * 0.1) }
+      local space_above = vim.fn.max({ 3, vim.fn.floor(vim.fn.winheight(0) * 0.1) })
       local space_below = 3
       local header = {}
       for i = 0, space_above do
@@ -66,11 +66,11 @@ return {
     "catppuccin/nvim",
     as = "catppuccin",
     config = function()
-      require("catppuccin").setup {
-        flavour = "macchiato" -- mocha, macchiato, frappe, latte
-      }
-      vim.api.nvim_command "colorscheme catppuccin"
-    end
+      require("catppuccin").setup({
+        flavour = "macchiato", -- mocha, macchiato, frappe, latte
+      })
+      vim.api.nvim_command("colorscheme catppuccin")
+    end,
   },
   {
     "LazyVim/LazyVim",
@@ -133,39 +133,39 @@ return {
   },
   -- disable cringey indentscope animation
   {
-    'echasnovski/mini.indentscope',
+    "echasnovski/mini.indentscope",
     config = function()
-      require('mini.indentscope').setup({
+      require("mini.indentscope").setup({
         draw = {
           delay = 50,
-          animation = require('mini.indentscope').gen_animation.none()
+          animation = require("mini.indentscope").gen_animation.none(),
         },
-        symbol = "│"
+        symbol = "│",
       })
-    end
+    end,
   },
   -- codeblocks, I probably want to remove this actually
   {
     "HampusHauffman/block.nvim",
     config = function()
       require("block").setup({})
-    end
+    end,
   },
   -- code minimap
   {
     "gorbit99/codewindow.nvim",
     config = function()
-      local codewindow = require('codewindow')
+      local codewindow = require("codewindow")
       codewindow.setup({ exclude_filetypes = { "nvim-tree", "neo-tree", "toggleterm" } })
       codewindow.apply_default_keybinds()
-    end
+    end,
   },
   -- comment code
   {
     "terrortylor/nvim-comment",
     config = function()
-      require('nvim_comment').setup()
-    end
+      require("nvim_comment").setup()
+    end,
   },
   -- treesitter parsers
   {
@@ -187,7 +187,7 @@ return {
         "vim",
         "yaml",
         "go",
-        "dockerfile"
+        "dockerfile",
       },
     },
   },
@@ -224,6 +224,7 @@ return {
           init_options = {
             command = { "golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1" },
           },
+          filetypes = { "go" },
         },
         yamlls = {
           schemas = {
@@ -232,8 +233,7 @@ return {
             ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
             ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
             ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
-            "*compose*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
           },
         },
       },
@@ -272,9 +272,9 @@ return {
         winbar = true,
         content_layout = "center",
         sources = {
-          { source = "filesystem",  display_name = "File" },
-          { source = "buffers",     display_name = "Bufs" },
-          { source = "git_status",  display_name = "Git" },
+          { source = "filesystem", display_name = "File" },
+          { source = "buffers", display_name = "Bufs" },
+          { source = "git_status", display_name = "Git" },
           { source = "diagnostics", display_name = "Diagnostic" },
         },
       },
@@ -294,7 +294,7 @@ return {
           hide_gitignored = true,
         },
       },
-    }
+    },
   },
   -- use C-j, C-k, etc. to navigate to tmux panes from neovim
   { "christoomey/vim-tmux-navigator" },
