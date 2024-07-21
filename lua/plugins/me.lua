@@ -131,6 +131,26 @@ return {
       })
     end,
   },
+  -- git blame!
+  {
+    "f-person/git-blame.nvim",
+    config = function()
+      require("gitblame").setup({
+        delay = 500,
+      })
+    end,
+  },
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      window = {
+        width = 0.6,
+      },
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
   -- disable cringey indentscope animation
   {
     "echasnovski/mini.indentscope",
@@ -214,11 +234,25 @@ return {
       -- Be aware that you also will need to properly configure your LSP server to
       -- provide the inlay hints.
       inlay_hints = {
-        enabled = false,
+        enabled = true,
       },
       ---@type lspconfig.options
       servers = {
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              codelenses = {
+                gc_details = true,
+                run_govulncheck = true,
+                test = true,
+              },
+              analyses = {
+                fieldalignment = false,
+                shadow = true,
+              },
+            },
+          },
+        },
         golangci_lint_ls = {
           cmd = { "golangci-lint-langserver", "-debug" },
           init_options = {
