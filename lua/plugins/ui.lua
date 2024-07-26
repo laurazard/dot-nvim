@@ -306,19 +306,21 @@ return {
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
+    dependencies = { "jackielii/neo-tree-harpoon.nvim" },
     lazy = true,
     opts = {
       auto_clean_after_session_restore = true,
       close_if_last_window = true,
-      sources = { "filesystem", "buffers", "git_status" },
+      sources = { "filesystem", "buffers", "git_status", "harpoon-buffers" },
       source_selector = {
-        winbar = true,
+        -- winbar = true,
         content_layout = "center",
         sources = {
-          { source = "filesystem",  display_name = "File" },
-          { source = "buffers",     display_name = "Bufs" },
-          { source = "git_status",  display_name = "Git" },
-          { source = "diagnostics", display_name = "Diagnostic" },
+          { source = "filesystem",      display_name = "File" },
+          { source = "buffers",         display_name = "Bufs" },
+          { source = "git_status",      display_name = "Git" },
+          { source = "harpoon-buffers", display_name = "Harpoon" },
+          { source = "diagnostics",     display_name = "Diagnostic" },
         },
       },
       window = {
@@ -352,7 +354,7 @@ return {
           offsets = {
             {
               filetype = "neo-tree",
-              text = "File Explorer",
+              text = "Neo-Tree",
               separator = true,
               text_align = "left",
             },
@@ -387,6 +389,14 @@ return {
         }
       })
     end
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      fps = 60,
+      stages = "slide",
+    }
   },
 
   -- better messages/popup UI
@@ -426,13 +436,77 @@ return {
     end,
   },
 
-  -- inline git blame
   {
-    "f-person/git-blame.nvim",
-    config = function()
-      require("gitblame").setup({
-        delay = 500,
-      })
+    "folke/edgy.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.opt.laststatus = 3
+      vim.opt.splitkeep = "screen"
     end,
-  },
+    opts = {
+      animate = {
+        enabled = false,
+      },
+      bottom = {
+        -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
+        {
+          ft = "toggleterm",
+          size = { height = 0.4 },
+          -- exclude floating windows
+          filter = function(buf, win)
+            return vim.api.nvim_win_get_config(win).relative == ""
+          end,
+        },
+        {
+          ft = "trouble",
+          size = { height = 20 },
+        },
+        { ft = "qf",            title = "QuickFix" },
+        {
+          ft = "help",
+          size = { height = 20 },
+          -- only show help buffers
+          filter = function(buf)
+            return vim.bo[buf].buftype == "help"
+          end,
+        },
+        { ft = "spectre_panel", size = { height = 0.4 } },
+      },
+      left = {
+        -- Neo-tree filesystem always takes half the screen height
+        {
+          title = "File System",
+          ft = "neo-tree",
+          filter = function(buf)
+            return vim.b[buf].neo_tree_source == "filesystem"
+          end,
+          size = { height = 0.5 },
+        },
+        {
+          title = "Harpoon Buffers",
+          ft = "neo-tree",
+          filter = function(buf)
+            return vim.b[buf].neo_tree_source == "harpoon-buffers"
+          end,
+          pinned = true,
+          open = "Neotree position=top harpoon-buffers",
+          size = { height = 0.2 },
+        },
+        {
+          title = "Git Status",
+          ft = "neo-tree",
+          filter = function(buf)
+            return vim.b[buf].neo_tree_source == "git_status"
+          end,
+          pinned = true,
+          collapsed = false, -- show window as closed/collapsed on start
+          open = "Neotree position=right git_status",
+        },
+
+
+        -- any other neo-tree windows
+        "neo-tree",
+      },
+    },
+  }
 }

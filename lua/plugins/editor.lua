@@ -119,7 +119,7 @@ return {
         desc = "Symbols (Trouble)",
       },
       {
-        "<leader>cd",
+        "<leader>cr",
         "<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>",
         desc = "LSP Definitions / references / ... (Trouble)",
       },
@@ -134,6 +134,16 @@ return {
         desc = "Quickfix List (Trouble)",
       },
     },
+  },
+
+  -- inline git blame
+  {
+    "f-person/git-blame.nvim",
+    config = function()
+      require("gitblame").setup({
+        delay = 500,
+      })
+    end,
   },
 
   -- code snippets for completion

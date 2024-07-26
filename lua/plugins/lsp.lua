@@ -120,7 +120,7 @@ return {
               test = true,
             },
             analyses = {
-              fieldalignment = true,
+              fieldalignment = false,
               unusedparams = true,
               shadow = true,
             },
@@ -135,19 +135,23 @@ return {
             },
             staticcheck = true,
             gofumpt = true,
+            -- semanticTokens = true,
             usePlaceholders = true,
           },
         },
         capabilities = capabilities,
         on_attach = function(client, bufnr)
-          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "code actions" })
-          vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { desc = "run codelens" })
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "code actions" })
+          vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "run codelens" })
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "goto definition" })
-          vim.keymap.set("n", "gr",
-            function()
-              require('telescope.builtin').lsp_references()
-            end,
-            { buffer = bufnr, desc = "find references" })
+          vim.keymap.set("n", "gi", function()
+            require("telescope.builtin").lsp_implementations()
+          end, { buffer = bufnr, desc = "goto implementations" })
+          vim.keymap.set("n", "gr", function()
+            require('telescope.builtin').lsp_references()
+          end, { buffer = bufnr, desc = "find references" })
+          vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float,
+            { buffer = bufnr, desc = "open diagnostics for line" })
 
           -- autoformat on save
           if client.supports_method("textDocument/formatting") then
@@ -164,7 +168,37 @@ return {
           -- inlay hints
           if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true)
+            vim.keymap.set("n", "<leader>ch", function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+              end,
+              { buffer = bufnr, desc = "toggle inlay hints" })
           end
+
+          -- semantic token highlighting
+          -- if client.server_capabilities.semanticTokensProvider then
+          --   -- remap colorscheme highlight groups for semantic tokens
+          --   local links = {
+          --     ['@lsp.type.namespace'] = '@namespace',
+          --     ['@lsp.type.type'] = '@type',
+          --     ['@lsp.type.class'] = '@type',
+          --     ['@lsp.type.enum'] = '@type',
+          --     ['@lsp.type.interface'] = '@type',
+          --     ['@lsp.type.struct'] = '@structure',
+          --     ['@lsp.type.parameter'] = '@parameter',
+          --     ['@lsp.type.variable'] = '@variable',
+          --     ['@lsp.type.property'] = '@property',
+          --     ['@lsp.type.enumMember'] = '@constant',
+          --     ['@lsp.type.function'] = '@function',
+          --     ['@lsp.type.method'] = '@method',
+          --     ['@lsp.type.macro'] = '@macro',
+          --     ['@lsp.type.decorator'] = '@function',
+          --   }
+          --   for newgroup, oldgroup in pairs(links) do
+          --     vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })
+          --   end
+          --
+          --   vim.lsp.semantic_tokens.start(bufnr, client.id)
+          -- end
 
           -- code lens
           vim.lsp.codelens.refresh()

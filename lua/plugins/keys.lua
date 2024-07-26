@@ -7,13 +7,23 @@ return {
       wk.setup({
         delay = 0
       })
+
+      local neotree_open = false
+      local toggle_neotree = function()
+        require("neo-tree")
+        if not neotree_open then
+          vim.cmd("Neotree show")
+          vim.cmd("Neotree show position=right git_status")
+          vim.cmd("Neotree show position=top harpoon-buffers")
+        else
+          vim.cmd("Neotree close")
+        end
+        neotree_open = not neotree_open
+      end
       wk.add({
         {
           "<leader>e",
-          function()
-            require("neo-tree")
-            vim.cmd("Neotree toggle")
-          end,
+          toggle_neotree,
           desc = "file explorer",
           mode = "n",
           icon = {
@@ -55,6 +65,9 @@ return {
           desc = "toggle code minimap"
         },
 
+        { "<leader>d", group = "debug" },
+        { "<leader>h", group = "harpoon" },
+
         { "<leader>x", group = "diagnostics" },
 
         {
@@ -78,7 +91,7 @@ return {
 
         {
           "<leader>u",
-          "<cmd>undotreetoggle<cr>",
+          "<cmd>UndotreeToggle<cr>",
           desc = "undo tree",
           icon = {
             icon = "↺",
