@@ -75,41 +75,8 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "PersistenceSavePre",
   group = "clear-ui-before-save",
   callback = function()
-    vim.cmd("Neotree close")
-    require("dapui").toggle()
     vim.cmd("Trouble diagnostics close")
-    vim.cmd("Trouble fzf close")
-    vim.cmd("Trouble fzf_files close")
-    vim.cmd("Trouble loclist close")
-    vim.cmd("Trouble lsp close")
-    vim.cmd("Trouble lsp_command close")
-    vim.cmd("Trouble lsp_declarations close")
-    vim.cmd("Trouble lsp_definitions close")
-    vim.cmd("Trouble lsp_document_symbols close")
-    vim.cmd("Trouble lsp_implementations close")
-    vim.cmd("Trouble lsp_incoming_calls close")
-    vim.cmd("Trouble lsp_outgoing_calls close")
-    vim.cmd("Trouble lsp_references close")
-    vim.cmd("Trouble lsp_type_definitions close")
-    vim.cmd("Trouble qflist close")
-    vim.cmd("Trouble quickfix close")
-    vim.cmd("Trouble symbols close")
-    vim.cmd("Trouble telescope close")
-    vim.cmd("Trouble telescope_files close")
+    vim.cmd("Neotree close")
+    require("dapui").close()
   end,
 })
-
-
-
-function dump(o)
-  if type(o) == 'table' then
-    local s = '{ '
-    for k, v in pairs(o) do
-      if type(k) ~= 'number' then k = '"' .. k .. '"' end
-      s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-    end
-    return s .. '} '
-  else
-    return tostring(o)
-  end
-end

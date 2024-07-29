@@ -37,6 +37,20 @@ return {
             FloatBorder = { bg = "none" },
             FloatTitle = { bg = "none" },
 
+            -- NormalFloat = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+            NeoTreeWinSeparator = { fg = theme.ui.bg_m1, bg = theme.ui.bg },
+            -- NeoTreeNormal = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
+            -- NeoTreeNormalNC = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
+            -- WinSeparator = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+            TroublePreview = { fg = theme.ui.fg, bg = theme.ui.bg },
+
+            -- EdgyWinBar = { fg = theme.syn.fun, bg = theme.ui.bg_m1, bold = true },
+            -- EdgyTitle = { fg = theme.syn.fun, bg = theme.ui.bg_m1, bold = true },
+            -- EdgyIcon = { fg = theme.syn.constant, bg = theme.ui.bg_m1 },
+            -- EdgyIconActive = { fg = theme.syn.constant, bg = theme.ui.bg_m1 },
+            -- EdgyNormal = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
+
+
             -- which-key
             WhichKeyNormal = { bg = theme.ui.bg_dim },
 
@@ -444,6 +458,9 @@ return {
       vim.opt.splitkeep = "screen"
     end,
     opts = {
+      -- wo = {
+      -- winhighlight = "",
+      -- },
       animate = {
         enabled = false,
       },
@@ -457,10 +474,17 @@ return {
             return vim.api.nvim_win_get_config(win).relative == ""
           end,
         },
-        {
-          ft = "trouble",
-          size = { height = 20 },
-        },
+        -- {
+        --   ft = "trouble",
+        --   size = { height = 10, width = 20 },
+        --   filter = function(_buf, win)
+        --     return vim.w[win].trouble
+        --         and not vim.w[win].trouble.position == "right"
+        --         -- and vim.w[win].trouble.type == "split"
+        --         -- and vim.w[win].trouble.relative == "win"
+        --         and not vim.w[win].trouble_preview
+        --   end,
+        -- },
         { ft = "qf",            title = "QuickFix" },
         {
           ft = "help",
@@ -507,6 +531,15 @@ return {
         -- any other neo-tree windows
         "neo-tree",
       },
+      -- right = {
+      --   {
+      --     ft = "trouble",
+      --     size = { height = 10, width = 20 },
+      --     filter = function(_buf, win)
+      --       return vim.w[win].trouble_preview
+      --     end,
+      --   },
+      -- },
     },
   }
 }

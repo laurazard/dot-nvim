@@ -14,3 +14,13 @@ vim.opt.softtabstop = 2 -- What you expecting
 vim.opt.shiftwidth = 2  -- What you expecting
 vim.opt.expandtab = true
 vim.opt.undofile = true
+
+vim.opt.fillchars = {
+  horiz     = '━',
+  horizup   = '┻',
+  horizdown = '┳',
+  vert      = '┃',
+  vertleft  = '┫',
+  vertright = '┣',
+  verthoriz = '╋',
+}
