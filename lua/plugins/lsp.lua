@@ -199,10 +199,11 @@ return {
           -- inlay hints
           if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true)
-            vim.keymap.set("n", "<leader>ch", function()
-                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-              end,
-              { buffer = bufnr, desc = "toggle inlay hints" })
+            -- disabled for which key performance
+            -- vim.keymap.set("n", "<leader>ch", function()
+            -- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            -- end,
+            -- { buffer = bufnr, desc = "toggle inlay hints" })
           end
 
           -- semantic token highlighting
@@ -248,5 +249,17 @@ return {
       }
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
     end,
+  },
+
+  {
+    "VidocqH/lsp-lens.nvim",
+    config = function()
+      require 'lsp-lens'.setup({
+        sections = {
+          definition = false,
+          git_authors = false,
+        },
+      })
+    end
   },
 }

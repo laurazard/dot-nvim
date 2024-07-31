@@ -51,12 +51,12 @@ return {
         },
 
         { "<leader>c", group = "code" },
-        {
-          "<leader>cf",
-          "<cmd>lua vim.lsp.buf.format{async=true}<cr>",
-          desc = "format code",
-          mode = "n"
-        },
+        -- {
+        --   "<leader>cf",
+        --   "<cmd>lua vim.lsp.buf.format{async=true}<cr>",
+        --   desc = "format code",
+        --   mode = "n"
+        -- },
         {
           "<leader>cm",
           function()

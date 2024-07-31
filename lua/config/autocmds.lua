@@ -75,6 +75,8 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "PersistenceSavePre",
   group = "clear-ui-before-save",
   callback = function()
+    require("neo-tree")
+    require("trouble")
     vim.cmd("Trouble diagnostics close")
     vim.cmd("Neotree close")
     require("dapui").close()

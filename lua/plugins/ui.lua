@@ -36,20 +36,13 @@ return {
             NormalFloat = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
             FloatBorder = { bg = "none" },
             FloatTitle = { bg = "none" },
+            EdgyNormal = { fg = "none", bg = theme.ui.bg },
 
-            -- NormalFloat = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-            NeoTreeWinSeparator = { fg = theme.ui.bg_m1, bg = theme.ui.bg },
-            -- NeoTreeNormal = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
-            -- NeoTreeNormalNC = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
-            -- WinSeparator = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-            TroublePreview = { fg = theme.ui.fg, bg = theme.ui.bg },
+            LspLens = { fg = theme.syn.parameter, bg = theme.ui.bg },
 
-            -- EdgyWinBar = { fg = theme.syn.fun, bg = theme.ui.bg_m1, bold = true },
-            -- EdgyTitle = { fg = theme.syn.fun, bg = theme.ui.bg_m1, bold = true },
-            -- EdgyIcon = { fg = theme.syn.constant, bg = theme.ui.bg_m1 },
-            -- EdgyIconActive = { fg = theme.syn.constant, bg = theme.ui.bg_m1 },
-            -- EdgyNormal = { fg = theme.ui.fg, bg = theme.ui.bg_m1 },
-
+            -- LeapBackdrop = { bg = theme.syn.parameter },
+            -- LeapMatch = { fg = theme.syn.parameter, bg = theme.syn.parameter },
+            LeapLabel = { fg = theme.ui.bg_m3, bg = theme.syn.parameter },
 
             -- which-key
             WhichKeyNormal = { bg = theme.ui.bg_dim },
@@ -307,7 +300,21 @@ return {
               function()
                 gs.undo_stage_hunk()
               end,
-              desc = "undo stage hung",
+              desc = "undo stage hunk",
+              mode = "n"
+            },
+
+            { "<leader>gc", group = "copy" },
+            {
+              "<leader>gcf",
+              "<cmd>GitBlameCopyFileURL<cr>",
+              desc = "copy file URL",
+              mode = "n"
+            },
+            {
+              "<leader>gcc",
+              "<cmd>GitBlameCopyCommitURL<cr>",
+              desc = "copy commit URL",
               mode = "n"
             },
 

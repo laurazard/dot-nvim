@@ -23,7 +23,8 @@ return {
   -- bookmarks for code!
   {
     "ThePrimeagen/harpoon",
-    event = { "BufReadPre", "BufNewFile" },
+    -- event = { "BufReadPre", "BufNewFile" },
+    event = "VeryLazy",
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
