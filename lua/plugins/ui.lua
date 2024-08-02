@@ -38,7 +38,7 @@ return {
             FloatTitle = { bg = "none" },
             EdgyNormal = { fg = "none", bg = theme.ui.bg },
 
-            LspLens = { fg = theme.syn.parameter, bg = theme.ui.bg },
+            LspLens = { fg = theme.ui.nontext, bg = theme.ui.bg },
 
             -- LeapBackdrop = { bg = theme.syn.parameter },
             -- LeapMatch = { fg = theme.syn.parameter, bg = theme.syn.parameter },

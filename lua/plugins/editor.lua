@@ -166,6 +166,7 @@ return {
       require("gitblame").setup({
         delay = 500,
         clipboard_register = "*",
+        highlight_group = "NonText"
       })
     end,
   },
