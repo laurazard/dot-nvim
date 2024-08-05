@@ -112,6 +112,22 @@ return {
           "<cmd>enew<cr>",
           desc = "new buffer"
         },
+        {
+          "<leader>bD",
+          function()
+            local bd = require('bufdelete')
+
+            -- Delete all but current buffer
+            local bufs = vim.api.nvim_list_bufs()
+            local current_buf = vim.api.nvim_get_current_buf()
+            for _, i in ipairs(bufs) do
+              if i ~= current_buf then
+                bd.bufdelete(i, true)
+              end
+            end
+          end,
+          desc = "delete all other buffers"
+        },
 
         {
           "<leader>b?",
