@@ -18,17 +18,6 @@ return {
   {
     "petertriho/cmp-git",
     dependencies = { 'hrsh7th/nvim-cmp' },
-    opts = {
-      -- options go here
-    },
-    init = function()
-      table.insert(require("cmp").get_config().sources, { name = "git" })
-    end,
-    config = function()
-      require("cmp_git").setup({
-        filetypes = { "*" },
-      })
-    end
   },
 
   -- code completion
@@ -130,15 +119,33 @@ return {
           end,
         },
         sources = {
-          { name = "git" },
           { name = 'nvim_lsp' },
           { name = 'luasnip' }, -- For luasnip users.
           { name = 'buffer' },
           { name = 'path' },
+          { name = 'git' },
         }
       })
 
-      require("cmp_git").setup()
+      require("cmp_git").setup({
+        filetypes = { "*" },
+        trigger_actions = {
+          {
+            debug_name = "git_commits",
+            trigger_character = "@",
+            action = function(sources, trigger_char, callback, params, git_info)
+              return sources.git:get_commits(callback, params, trigger_char)
+            end,
+          },
+          {
+            debug_name = "github_issues_and_pr",
+            trigger_character = "#",
+            action = function(sources, trigger_char, callback, params, git_info)
+              return sources.github:get_issues_and_prs(callback, git_info, trigger_char)
+            end,
+          },
+        },
+      })
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
