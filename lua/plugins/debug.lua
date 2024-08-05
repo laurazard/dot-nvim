@@ -68,6 +68,27 @@ return {
         desc = "debug - nearest test"
       },
     },
+    config = function()
+      require("dap-go").setup({
+        dap_configurations = {
+          -- {
+          --   type = "go",
+          --   name = "Debug (Build Flags & Arguments)",
+          --   request = "launch",
+          --   program = "${file}",
+          --   args = require("dap-go").get_arguments,
+          --   buildFlags = require("dap-go").get_build_flags,
+          -- },
+          {
+            name = "attach dit",
+            type = "go",
+            request = "launch",
+            program = "./cmd/docker",
+            args = require("dap-go").get_arguments,
+          }
+        },
+      })
+    end
   },
 
   -- dap ui
@@ -79,7 +100,7 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     lazy = true,
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "leoluz/nvim-dap-go" },
     config = function()
       require("dapui").setup()
     end
