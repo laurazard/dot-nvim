@@ -254,10 +254,18 @@ return {
   {
     "VidocqH/lsp-lens.nvim",
     config = function()
+      local SymbolKind = vim.lsp.protocol.SymbolKind
       require 'lsp-lens'.setup({
         sections = {
           definition = false,
           git_authors = false,
+        },
+        target_symbol_kinds = {
+          SymbolKind.Function,
+          SymbolKind.Method,
+          SymbolKind.Interface,
+          SymbolKind.Class,
+          SymbolKind.Struct, -- for golang `type` declarations
         },
       })
     end
