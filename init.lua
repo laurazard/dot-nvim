@@ -23,4 +23,5 @@ vim.opt.fillchars = {
   vertleft  = '┫',
   vertright = '┣',
   verthoriz = '╋',
+  diff      = '╱',
 }
