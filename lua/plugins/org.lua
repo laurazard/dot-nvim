@@ -73,9 +73,9 @@ return {
                 end,
             })
 
-            vim.keymap.set("n", "<leader>r", require("telescope").extensions.orgmode.refile_heading)
-            vim.keymap.set("n", "<leader>fh", require("telescope").extensions.orgmode.search_headings)
-            vim.keymap.set("n", "<leader>li", require("telescope").extensions.orgmode.insert_link)
+            vim.keymap.set("n", "<leader>or", require("telescope").extensions.orgmode.refile_heading)
+            vim.keymap.set("n", "<leader>oh", require("telescope").extensions.orgmode.search_headings)
+            vim.keymap.set("n", "<leader>oil", require("telescope").extensions.orgmode.insert_link)
         end,
     },
     {
@@ -107,19 +107,14 @@ return {
             })
         end
     },
-    -- {
-    --     "chipsenkbeil/org-roam.nvim",
-    --     tag = "0.1.0",
-    --     dependencies = {
-    --         {
-    --             "nvim-orgmode/orgmode",
-    --             tag = "0.3.4",
-    --         },
-    --     },
-    --     config = function()
-    --         require("org-roam").setup({
-    --             directory = "~/orgfiles",
-    --         })
-    --     end
-    -- }
+    {
+        "chipsenkbeil/org-roam.nvim",
+        dependencies = { { "nvim-orgmode/orgmode", }, },
+        config = function()
+            require("org-roam").setup({
+                directory = "~/orgfiles",
+                bindings = { prefix = "<leader>r", },
+            })
+        end
+    }
 }
