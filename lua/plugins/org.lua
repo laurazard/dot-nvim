@@ -1,7 +1,7 @@
 return {
     {
         'nvim-orgmode/orgmode',
-        event = 'VeryLazy',
+        event = 'LazyFile',
         ft = { 'org' },
         config = function()
             -- Setup orgmode
@@ -80,6 +80,7 @@ return {
     },
     {
         "danilshvalov/org-modern.nvim",
+        event = "LazyFile",
         dependencies = {
             "nvim-orgmode/orgmode"
         },
@@ -109,6 +110,7 @@ return {
     },
     {
         "chipsenkbeil/org-roam.nvim",
+        event = "LazyFile",
         dependencies = { { "nvim-orgmode/orgmode", }, },
         config = function()
             require("org-roam").setup({
