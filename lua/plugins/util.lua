@@ -28,6 +28,8 @@ return {
 
     { "christoomey/vim-tmux-navigator" },
 
+    -- assortment of utils, using this for the
+    -- statuscolumn niceties and for profiling
     {
         "folke/snacks.nvim",
         priority = 1000,
@@ -41,10 +43,9 @@ return {
             notifier = { enabled = false },
             quickfile = { enabled = false },
             scroll = { enabled = false },
-            statuscolumn = { enabled = false },
+            statuscolumn = { enabled = true },
             words = { enabled = false },
-            profiler = {
-            }
+            profiler = {}
         },
     }
 }
