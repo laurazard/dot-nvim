@@ -10,11 +10,11 @@ return {
 
     {
         "williamboman/mason-lspconfig.nvim",
-        opts = {
-            ensure_installed = {
-                "yamlls",
-            }
-        },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            table.insert(opts.ensure_installed, "yamlls")
+            return opts
+        end
     },
 
     {

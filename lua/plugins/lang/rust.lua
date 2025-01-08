@@ -17,15 +17,6 @@ return {
     },
 
     {
-        "williamboman/mason-lspconfig.nvim",
-        opts = {
-            ensure_installed = {
-                "rust_analyzer",
-            }
-        },
-    },
-
-    {
         "VidocqH/lsp-lens.nvim",
         opts = {
             -- rustaceanvim provides this

@@ -11,12 +11,13 @@ return {
 
     {
         "williamboman/mason-lspconfig.nvim",
-        opts = {
-            ensure_installed = {
-                "gopls",
-                "golangci_lint_ls",
-            }
-        },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            table.insert(opts.ensure_installed, "gopls")
+            table.insert(opts.ensure_installed, "golangci_lint_ls")
+
+            return opts
+        end
     },
 
     {

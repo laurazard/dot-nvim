@@ -32,10 +32,9 @@ require("lazy").setup({
     spec = {
         -- import your plugins
         { "bwpge/lazy-events.nvim", import = "lazy-events.import", lazy = false },
-        { import = "plugins" },
         { import = "plugins.editor" },
         { import = "plugins.code" },
-        { import = "plugins.lang" },
+        { import = "plugins" },
     },
     defaults = {
         lazy = false,

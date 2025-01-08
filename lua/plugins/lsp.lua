@@ -101,21 +101,34 @@ end
 
 return {
     {
+        import = "plugins.lang"
+    },
+
+    {
         "williamboman/mason.nvim",
         config = function(_, opts)
             require("mason").setup(opts)
         end
     },
 
-
     {
         "williamboman/mason-lspconfig.nvim",
-        opts = {
-            ensure_installed = {
-                "basedpyright",
-            }
-        },
+        -- event = "LazyFile",
+        dependencies = { "williamboman/mason.nvim" },
         config = function(_, opts)
+            -- dump = function(o)
+            --     if type(o) == 'table' then
+            --         local s = '{ '
+            --         for k, v in pairs(o) do
+            --             if type(k) ~= 'number' then k = '"' .. k .. '"' end
+            --             s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+            --         end
+            --         return s .. '} '
+            --     else
+            --         return tostring(o)
+            --     end
+            -- end
+            -- require("notify")(dump(opts))
             require("mason-lspconfig").setup(opts)
         end
     },
@@ -123,10 +136,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = 'LazyFile',
-        dependencies = {
-            "mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-        },
+        dependencies = { "williamboman/mason-lspconfig.nvim" },
         opts = {
             -- options for vim.diagnostic.config()
             diagnostics = {
