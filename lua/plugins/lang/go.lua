@@ -1,12 +1,12 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        opts = {
-            ensure_installed = {
-                "go",
-                "gomod",
-            }
-        }
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            table.insert(opts.ensure_installed, "go")
+            table.insert(opts.ensure_installed, "gomod")
+            return opts
+        end
     },
 
     {
@@ -15,7 +15,6 @@ return {
             opts.ensure_installed = opts.ensure_installed or {}
             table.insert(opts.ensure_installed, "gopls")
             table.insert(opts.ensure_installed, "golangci_lint_ls")
-
             return opts
         end
     },

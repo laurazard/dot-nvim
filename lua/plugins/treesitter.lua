@@ -2,11 +2,11 @@ return {
     -- code parser/highlighter/textobjects
     {
         "nvim-treesitter/nvim-treesitter",
-        version = false, -- last release is way too ol
+        version = false, -- last release is way too old
         build = ":TSUpdate",
-        opts = {
+        opts = function(_, opts)
             -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-            ensure_installed = {
+            local ensure_installed = {
                 "vimdoc",
                 "bash",
                 "html",
@@ -21,15 +21,18 @@ return {
                 "typescript",
                 "vim",
                 "dockerfile",
-            },
+            }
+            for _, item in ipairs(ensure_installed) do
+                table.insert(opts.ensure_installed, item)
+            end
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
-            sync_install = false,
+            opts.sync_install = false
 
             ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
             -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
-            highlight = {
+            opts.highlight = {
                 enable = true,
 
                 ---@diagnostic disable: unused-local
@@ -47,9 +50,24 @@ return {
                 -- Using this option may slow down your editor, and you may see some duplicate highlights.
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
-            },
-        },
+            }
+
+            return opts
+        end,
         config = function(_, opts)
+            -- dump = function(o)
+            --     if type(o) == 'table' then
+            --         local s = '{ '
+            --         for k, v in pairs(o) do
+            --             if type(k) ~= 'number' then k = '"' .. k .. '"' end
+            --             s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+            --         end
+            --         return s .. '} '
+            --     else
+            --         return tostring(o)
+            --     end
+            -- end
+            -- require("notify")(dump(opts.ensure_installed))
             require 'nvim-treesitter.configs'.setup(opts)
         end
     },

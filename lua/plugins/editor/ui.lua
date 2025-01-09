@@ -29,6 +29,11 @@ return {
         config = function()
             local open_with_trouble = require("trouble.sources.telescope").open
             require("telescope").setup {
+                pickers = {
+                    find_files = {
+                        hidden = true
+                    },
+                },
                 extensions = {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown {
