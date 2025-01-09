@@ -200,20 +200,18 @@ return {
 
     {
         "VidocqH/lsp-lens.nvim",
-        opts = function()
+        opts = function(_, opts)
+            opts.sections = {
+                definition = true,
+                git_authors = true,
+            }
             local SymbolKind = vim.lsp.protocol.SymbolKind
-            return {
-                sections = {
-                    definition = true,
-                    git_authors = true,
-                },
-                target_symbol_kinds = {
-                    SymbolKind.Function,
-                    SymbolKind.Method,
-                    SymbolKind.Interface,
-                    SymbolKind.Class,
-                    SymbolKind.Struct,
-                },
+            opts.target_symbol_kinds = {
+                SymbolKind.Function,
+                SymbolKind.Method,
+                SymbolKind.Interface,
+                SymbolKind.Class,
+                SymbolKind.Struct,
             }
         end,
         config = function(_, opts)

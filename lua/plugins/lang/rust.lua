@@ -20,9 +20,9 @@ return {
         "VidocqH/lsp-lens.nvim",
         opts = {
             -- rustaceanvim provides this
-            ignore_filetype = {
-                "rust",
-            },
+            -- ignore_filetype = {
+            --     "rust",
+            -- },
         }
     },
 
@@ -49,13 +49,21 @@ return {
                         diagnostics = {
                             enable = true,
                         },
+                        -- disable implementations/reference lens in favor of
+                        -- lsp-lens.nvim
                         lens = {
+                            implementations = {
+                                enable = false
+                            },
                             references = {
                                 adt = {
-                                    enable = true
+                                    enable = false
                                 },
                                 method = {
-                                    enable = true
+                                    enable = false
+                                },
+                                trait = {
+                                    enable = false
                                 }
                             }
                         },
