@@ -218,4 +218,40 @@ return {
             require("lsp-lens").setup(opts)
         end
     },
+
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy", -- Or `LspAttach`
+        priority = 1000,    -- needs to be loaded in first
+        opts = {
+            preset = "modern",
+            hi = {
+                --     error = "DiagnosticVirtualTextError",
+                --     warn = "DiagnosticVirtualTextWarn",
+                --     info = "DiagnosticVirtualTextInfo",
+                --     hint = "DiagnosticHint",
+                -- arrow = "none",
+                --     background = "CursorLine", -- Can be a highlight or a hexadecimal color (#RRGGBB)
+                --     mixing_color = "None",     -- Can be None or a hexadecimal color (#RRGGBB). Used to blend the background color with the diagnostic background color with another color.
+            },
+            options = {
+                use_icons_from_diagnostic = true,
+                multilines = {
+                    enabled = true,
+                    always_show = true,
+                },
+                virt_texts = {
+                    priority = 10000,
+                },
+            },
+            signs = {
+                left = "",
+                right = "",
+            }
+        },
+        config = function(_, opts)
+            vim.diagnostic.config({ virtual_text = false })
+            require('tiny-inline-diagnostic').setup(opts)
+        end
+    }
 }

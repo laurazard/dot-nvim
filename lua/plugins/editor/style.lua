@@ -79,6 +79,10 @@ return {
                         DiagnosticVirtualTextWarn  = makeDiagnosticColor(theme.diag.warning),
                         DiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
 
+                        TinyInlineDiagnosticVirtualTextInfo = makeDiagnosticColor(theme.diag.info),
+                        TinyInlineDiagnosticVirtualTextWarn = makeDiagnosticColor(theme.diag.warning),
+                        TinyInlineDiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
+
                         TroubleNormalNC            = { bg = theme.ui.bg_dim },
                         TroubleNormal              = { bg = theme.ui.bg_dim },
                         TroubleAlt                 = { bg = theme.ui.bg_m3 },
