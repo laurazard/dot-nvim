@@ -100,12 +100,15 @@ return {
     -- inline git blame
     {
         "f-person/git-blame.nvim",
-        config = function()
-            require("gitblame").setup({
-                delay = 500,
-                clipboard_register = "*",
-                highlight_group = "NonText"
-            })
+        opts = {
+            delay = 0,
+            clipboard_register = "*",
+            highlight_group = "NonText",
+            date_format = "%d-%m-%Y",
+            virtual_text_column = 70,
+        },
+        config = function(_, opts)
+            require("gitblame").setup(opts)
         end,
     },
 

@@ -196,8 +196,6 @@ return {
         end,
     },
 
-
-
     {
         "VidocqH/lsp-lens.nvim",
         opts = function(_, opts)
@@ -243,6 +241,8 @@ return {
                 virt_texts = {
                     priority = 10000,
                 },
+                show_source = true,
+                throttle = 0,
             },
             signs = {
                 left = "",
