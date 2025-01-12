@@ -96,8 +96,12 @@ return {
                     },
                 },
                 menu = {
+                    direction_priority = {
+                        "n"
+                    },
                     -- auto_show = function(ctx) return ctx.mode ~= 'cmdline' end,
                     draw = {
+                        -- disabled since using colorful-menu
                         -- treesitter = { 'lsp' },
                         components = {
                             kind_icon = {
@@ -106,11 +110,6 @@ return {
                                     local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
                                     return kind_icon
                                 end,
-                                -- Optionally, you may also use the highlights from mini.icons
-                                -- highlight = function(ctx)
-                                --     local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-                                --     return hl
-                                -- end,
                             },
                             label = {
                                 width = { fill = true, max = 60 },
@@ -119,7 +118,7 @@ return {
                         columns = { { "kind_icon", gap = 1 }, { "label", "label_description", gap = 1 } },
                     },
                     auto_show = true,
-                }
+                },
             },
 
             appearance = {
@@ -184,6 +183,15 @@ return {
             opts.completion.menu.draw.components.label.highlight = require("colorful-menu").blink_components_highlight
 
             require("blink.cmp").setup(opts)
-        end
+        end,
+        keys = {
+            {
+                "≥", -- Alt-.
+                mode = { "i" },
+                function()
+                    require("blink.cmp").show()
+                end,
+            },
+        },
     }
 }
