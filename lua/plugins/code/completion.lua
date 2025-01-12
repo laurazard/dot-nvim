@@ -1,17 +1,4 @@
 return {
-    -- code snippets for completion
-    {
-        "L3MON4D3/LuaSnip",
-        -- follow latest release.
-        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-        -- install jsregexp (optional!).
-        build = "make install_jsregexp",
-        dependencies = { "rafamadriz/friendly-snippets", "saadparwaiz1/cmp_luasnip" },
-        config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end
-    },
-
     -- blink nvim-cmp compatiility layer
     {
         'saghen/blink.compat',
@@ -59,7 +46,6 @@ return {
         dependencies = {
             -- optional: provides snippets for the snippet source
             'rafamadriz/friendly-snippets',
-            { 'L3MON4D3/LuaSnip', version = 'v2.*' }
         },
 
         -- use a release tag to download pre-built binaries
@@ -73,14 +59,7 @@ return {
         ---@type blink.cmp.Config
         opts = {
             snippets = {
-                expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-                active = function(filter)
-                    if filter and filter.direction then
-                        return require('luasnip').jumpable(filter.direction)
-                    end
-                    return require('luasnip').in_snippet()
-                end,
-                jump = function(direction) require('luasnip').jump(direction) end,
+                preset = 'default',
             },
 
             -- 'default' for mappings similar to built-in completion
@@ -109,9 +88,12 @@ return {
                     auto_show_delay_ms = 0,
                 },
                 list = {
-                    selection = function(ctx)
-                        return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect'
-                    end
+                    selection = {
+                        preselect = function(ctx)
+                            return ctx.mode ~= 'cmdline'
+                        end,
+                        auto_insert = true,
+                    },
                 },
                 menu = {
                     -- auto_show = function(ctx) return ctx.mode ~= 'cmdline' end,
@@ -135,7 +117,8 @@ return {
                             },
                         },
                         columns = { { "kind_icon", gap = 1 }, { "label", "label_description", gap = 1 } },
-                    }
+                    },
+                    auto_show = true,
                 }
             },
 
@@ -181,7 +164,7 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 -- remember to enable your providers here
-                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'luasnip', 'orgmode' },
+                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
                 providers = {
                     orgmode = {
                         name = 'orgmode',
