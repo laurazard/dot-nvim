@@ -4,7 +4,7 @@ return {
     -- icons libraries
     {
         "nvim-tree/nvim-web-devicons",
-        lazy = true,
+        -- lazy = true,
     },
     {
         'echasnovski/mini.icons',
@@ -104,6 +104,7 @@ return {
     -- buffer line (top line with buffers as tabs)
     {
         'akinsho/bufferline.nvim',
+        version = "v4.9.0",
         dependencies = {
             'nvim-tree/nvim-web-devicons'
         },
@@ -123,6 +124,7 @@ return {
                     modified_icon = "●",
                     show_close_icon = false,
                     show_buffer_close_icons = true,
+                    show_buffer_icons = true,
                 },
             })
         end,
