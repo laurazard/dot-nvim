@@ -8,7 +8,6 @@ return {
             -- A list of parser names, or "all" (the listed parsers MUST always be installed)
             local ensure_installed = {
                 "vimdoc",
-                "bash",
                 "html",
                 "javascript",
                 "json",
@@ -68,6 +67,13 @@ return {
             --     end
             -- end
             -- require("notify")(dump(opts.ensure_installed))
+
+            for ft, parser in pairs(opts.extra_mappings) do
+                require("notify")(ft .. " " .. parser)
+                vim.treesitter.language.register(parser, ft)
+            end
+            opts.extra_mappings = nil
+
             require 'nvim-treesitter.configs'.setup(opts)
         end
     },
