@@ -13,13 +13,11 @@ return {
                 "json",
                 "markdown",
                 "markdown_inline",
-                "python",
                 "query",
                 "regex",
                 "tsx",
                 "typescript",
                 "vim",
-                "dockerfile",
             }
             for _, item in ipairs(ensure_installed) do
                 table.insert(opts.ensure_installed, item)
@@ -69,7 +67,7 @@ return {
             -- require("notify")(dump(opts.ensure_installed))
 
             for ft, parser in pairs(opts.extra_mappings) do
-                require("notify")(ft .. " " .. parser)
+                -- require("notify")(ft .. " " .. parser)
                 vim.treesitter.language.register(parser, ft)
             end
             opts.extra_mappings = nil
