@@ -15,6 +15,15 @@ CONFIGURE_LS_ON_ATTACH = function(autoformat)
         end, { buffer = bufnr, desc = "rename symbol" })
         vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float,
             { buffer = bufnr, desc = "open diagnostics for line" })
+        vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format,
+            { buffer = bufnr, desc = "format code" })
+
+        -- workaround for formatting w/ yamlls
+        -- FIXME: extract this from generic on_attach func and make configurable
+        -- see: https://github.com/LazyVim/LazyVim/commit/7f5051ef72cfe66eb50ddb7c973714aa8aea04ec
+        if client.name == "yamlls" then
+            client.server_capabilities.documentFormattingProvider = true
+        end
 
         -- autoformat on save
         if autoformat and client.supports_method("textDocument/formatting") then
@@ -97,6 +106,21 @@ CONFIGURE_LS_ON_ATTACH = function(autoformat)
             end
         })
     end
+end
+
+function TABLE_MERGE(t1, t2)
+    for k, v in pairs(t2) do
+        if type(v) == "table" then
+            if type(t1[k] or false) == "table" then
+                TABLE_MERGE(t1[k] or {}, t2[k] or {})
+            else
+                t1[k] = v
+            end
+        else
+            t1[k] = v
+        end
+    end
+    return t1
 end
 
 return {
@@ -189,7 +213,12 @@ return {
             local capabilities = require('blink.cmp').get_lsp_capabilities()
 
             for server_name, lsp_config in pairs(opts.servers) do
-                lsp_config.capabilities = capabilities
+                local specific_capabilities = capabilities
+                -- merge specific capabilities
+                if lsp_config.capabilities then
+                    TABLE_MERGE(specific_capabilities, lsp_config.capabilities)
+                end
+                lsp_config.capabilities = specific_capabilities
                 lsp_config.on_attach = CONFIGURE_LS_ON_ATTACH(true)
                 require("lspconfig")[server_name].setup(lsp_config)
             end

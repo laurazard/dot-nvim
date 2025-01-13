@@ -24,7 +24,9 @@ return {
         opts = {
             servers = {
                 dockerls = {},
-                docker_compose_language_service = {},
+                -- provided by yamlls w/ compose_schema
+                -- TODO: see if we can have both working together
+                -- docker_compose_language_service = {},
             }
         },
     },

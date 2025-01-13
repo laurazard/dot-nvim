@@ -23,6 +23,7 @@ return {
         opts = {
             servers = {
                 yamlls = {
+                    -- schemas for language server
                     schemas = {
                         ["http://json.schemastore.org/github-workflow"] =
                         ".github/workflows/*.{yml,yaml}",
@@ -37,7 +38,23 @@ return {
                         ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
                         "*compose*.{yml,yaml}",
                     },
-                }
+                    capabilities = {
+                        textDocument = {
+                            foldingRange = {
+                                dynamicRegistration = false,
+                                lineFoldingOnly = true,
+                            },
+                        },
+                    },
+                    settings = {
+                        format = {
+                            enable = true,
+                        },
+                    },
+                },
+                -- builtin from lspconfig
+                -- on_new_config = function(new_config)
+                -- end
             },
         },
     },
