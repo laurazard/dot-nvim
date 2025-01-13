@@ -15,8 +15,6 @@ CONFIGURE_LS_ON_ATTACH = function(autoformat)
         end, { buffer = bufnr, desc = "rename symbol" })
         vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float,
             { buffer = bufnr, desc = "open diagnostics for line" })
-        vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format,
-            { buffer = bufnr, desc = "format code" })
 
         -- workaround for formatting w/ yamlls
         -- FIXME: extract this from generic on_attach func and make configurable
@@ -132,6 +130,16 @@ return {
         "williamboman/mason.nvim",
         config = function(_, opts)
             require("mason").setup(opts)
+            local mr = require("mason-registry")
+
+            mr.refresh(function()
+                for _, tool in ipairs(opts.ensure_installed) do
+                    local p = mr.get_package(tool)
+                    if not p:is_installed() then
+                        p:install()
+                    end
+                end
+            end)
         end
     },
 

@@ -23,7 +23,9 @@ return {
                 lua = { "stylua" },
                 -- python = { "isort", "black" },
                 -- javascript = { "prettierd", "prettier", stop_after_first = true },
+                -- TODO: move this to language files
                 gp = { "gofumpt", "golines", "goimports" },
+                sh = { "shfmt" },
             },
             -- Set default options
             default_format_opts = {
