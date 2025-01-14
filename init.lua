@@ -13,6 +13,35 @@ if vim.env.PROF then
     })
 end
 
+DUMP = function(o)
+    if type(o) == 'table' then
+        local s = '{\n'
+        for k, v in pairs(o) do
+            if type(k) ~= 'number' then k = '"' .. k .. '"' end
+            s = s .. '[' .. k .. '] = ' .. DUMP(v) .. ','
+        end
+        return s .. '}\n'
+    else
+        return tostring(o)
+    end
+end
+
+ADD_CMD = vim.api.nvim_create_user_command
+
+ADD_CMD("PrintAllWinOptions", function()
+    local win_number = vim.api.nvim_get_current_win()
+    local v = vim.wo[win_number]
+    local all_options = vim.api.nvim_get_all_options_info()
+    local result = ''
+    for key, val in pairs(all_options) do
+        if val.global_local == false and val.scope == 'win' then
+            result = result ..
+                '\n' .. key .. '=' .. tostring(v[key] or '<not set>')
+        end
+    end
+    print(result)
+end, {})
+
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 require("config.keymaps")
