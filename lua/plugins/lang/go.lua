@@ -36,7 +36,9 @@ return {
                             analyses = {
                                 fieldalignment = false,
                                 unusedparams = true,
-                                shadow = true,
+                                -- covered by golangci_lint_ls, and that one
+                                -- can ignore err/ok shadows
+                                shadow = false,
                             },
                             hints = {
                                 rangeVariableTypes = true,
