@@ -5,6 +5,7 @@ return {
             opts.ensure_installed = opts.ensure_installed or {}
             table.insert(opts.ensure_installed, "go")
             table.insert(opts.ensure_installed, "gomod")
+            table.insert(opts.ensure_installed, "gosum")
             return opts
         end
     },
@@ -52,7 +53,8 @@ return {
                             usePlaceholders = true,
                         },
                     },
-                }
+                },
+
             }
         },
     },
