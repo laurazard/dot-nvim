@@ -54,7 +54,7 @@ return {
                         },
                     },
                 },
-
+                golangci_lint_ls = {},
             }
         },
     },
