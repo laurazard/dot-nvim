@@ -166,8 +166,8 @@ return {
                 default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
                 providers = {
                     orgmode = {
-                        name = 'orgmode',
-                        module = 'blink.compat.source',
+                        name = 'Orgmode',
+                        module = 'orgmode.org.autocompletion.blink',
                     },
                     lazydev = {
                         name = "LazyDev",
