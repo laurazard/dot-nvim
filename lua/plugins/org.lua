@@ -11,7 +11,10 @@ return {
 
                 org_todo_keywords = { 'TODO(t)', 'DOING(o@/!)', 'WAIT(w@/!)', '|', 'DONE(d)' },
                 mappings = {
-                    org_return_uses_meta_return = true
+                    org_return_uses_meta_return = true,
+                    org = {
+                        org_open_at_point = 'gd',
+                    },
                 }
 
                 -- mappings = {
