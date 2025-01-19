@@ -92,10 +92,18 @@ return {
                     },
                 },
 
+                { "<leader>n", group = "notifications" },
                 {
-                    "<leader>n",
+                    "<leader>nn",
                     "<cmd>Telescope notify<cr>",
                     desc = "notifications",
+                },
+                {
+                    "<leader>nd",
+                    function()
+                        require("notify").dismiss({})
+                    end,
+                    desc = "dismiss notifications",
                 },
 
                 {
