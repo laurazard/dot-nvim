@@ -133,3 +133,15 @@ vim.api.nvim_create_autocmd({ "WinNew", "WinLeave", "WinEnter", "BufAdd", "WinRe
         end
     end,
 })
+
+-- need this to be able to automatically comment tla files 
+vim.api.nvim_create_augroup("comment_tla", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    group = "comment_tla",
+    pattern = {
+        "tla",
+    },
+    callback = function()
+        vim.bo["commentstring"] = "\\* %s"
+    end,
+})
