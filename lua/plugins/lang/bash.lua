@@ -6,7 +6,8 @@ return {
             table.insert(opts.ensure_installed, "bash")
 
             opts.extra_mappings = {
-                ["dotenv"] = "bash"
+                ["dotenv"] = "bash",
+                ["zsh"] = "bash"
             }
             return opts
         end
