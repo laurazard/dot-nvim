@@ -1,4 +1,6 @@
 CONFIGURE_LS_ON_ATTACH = function(autoformat)
+    --- @inlinedoc
+    --- @param client vim.lsp.Client
     return function(client, bufnr)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "code actions" })
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "run codelens" })
@@ -97,7 +99,7 @@ CONFIGURE_LS_ON_ATTACH = function(autoformat)
 
         -- code lens
         vim.lsp.codelens.refresh()
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        vim.api.nvim_create_autocmd({ "BufWritePre", "BufEnter", "CursorHold", "InsertLeave" }, {
             buffer = bufnr,
             callback = function()
                 vim.lsp.codelens.refresh()
