@@ -136,6 +136,9 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
+            vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+            local git_blame = require('gitblame')
+
             require('lualine').setup({
                 options = {
                     theme = "kanagawa",
@@ -143,7 +146,26 @@ return {
                 sections = {
                     lualine_a = { 'mode' },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { { 'filename', path = 1 }, },
+                    lualine_c = {
+                        {
+                            'filename',
+                            path = 4,
+                        },
+                        {
+                            git_blame.get_current_blame_text,
+                            cond = function()
+                                return git_blame.is_blame_text_available and vim.o.columns > 100
+                            end,
+                            fmt = function(str)
+                                local max_length = vim.o.columns - 95
+                                if string.len(str) < max_length then
+                                    return " " .. str
+                                end
+                                return " " .. str:sub(1, max_length) .. "..."
+                            end,
+                            color = "LuaGitStatus",
+                        }
+                    },
                     lualine_x = { 'encoding', 'fileformat', 'filetype' },
                     lualine_y = { 'progress' },
                     lualine_z = { 'location' }

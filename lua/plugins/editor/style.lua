@@ -46,6 +46,9 @@ return {
 
                         LspLens                              = { fg = theme.ui.nontext, bg = theme.ui.bg },
 
+                        -- lualine git status
+                        LuaGitStatus                         = { fg = theme.ui.special, bg = theme.ui.bg_p1 },
+
                         -- LeapBackdrop = { bg = theme.syn.parameter },
                         -- LeapMatch = { fg = theme.syn.parameter, bg = theme.syn.parameter },
                         LeapLabel                            = { fg = theme.ui.bg_m3, bg = theme.syn.parameter },
