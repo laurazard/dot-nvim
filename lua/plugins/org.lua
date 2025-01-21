@@ -15,7 +15,15 @@ return {
                     org = {
                         org_open_at_point = 'gd',
                     },
-                }
+                },
+
+                org_capture_templates = {
+                    j = {
+                        description = 'Journal',
+                        template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
+                        target = '~/orgfiles/journal.org'
+                    },
+                },
 
                 -- mappings = {
                 --     org_agenda_clock_in = "<leader>ci"
@@ -80,36 +88,6 @@ return {
             vim.keymap.set("n", "<leader>oh", require("telescope").extensions.orgmode.search_headings)
             vim.keymap.set("n", "<leader>oil", require("telescope").extensions.orgmode.insert_link)
         end,
-    },
-    {
-        "danilshvalov/org-modern.nvim",
-        event = "LazyFile",
-        dependencies = {
-            "nvim-orgmode/orgmode"
-        },
-        config = function()
-            local Menu = require("org-modern.menu")
-            require("orgmode").setup({
-                ui = {
-                    menu = {
-                        handler = function(data)
-                            Menu:new({
-                                window = {
-                                    margin = { 1, 0, 1, 0 },
-                                    padding = { 0, 1, 0, 1 },
-                                    title_pos = "center",
-                                    border = "single",
-                                    zindex = 1000,
-                                },
-                                icons = {
-                                    separator = "➜",
-                                },
-                            }):open(data)
-                        end,
-                    },
-                },
-            })
-        end
     },
     {
         "chipsenkbeil/org-roam.nvim",
