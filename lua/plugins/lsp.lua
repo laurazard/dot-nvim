@@ -41,8 +41,7 @@ CONFIGURE_LS_ON_ATTACH = function(autoformat)
             vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = "autoformat_on_save",
-                -- pattern = "*.go",
-                buffer = bufnr,
+                pattern = "*.go",
                 callback = function()
                     local params = vim.lsp.util.make_range_params()
                     params.context = { only = { "source.organizeImports" } }
