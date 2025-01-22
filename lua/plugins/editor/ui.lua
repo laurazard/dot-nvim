@@ -157,7 +157,8 @@ return {
                                 return git_blame.is_blame_text_available and vim.o.columns > 100
                             end,
                             fmt = function(str)
-                                local max_length = vim.o.columns - 95
+                                local filename_len = string.len(vim.fn.expand('%'))
+                                local max_length = vim.o.columns - 35 - filename_len
                                 if string.len(str) < max_length then
                                     return " " .. str
                                 end
