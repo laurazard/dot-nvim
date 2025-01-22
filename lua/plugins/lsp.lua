@@ -40,7 +40,7 @@ CONFIGURE_LS_ON_ATTACH = function(codeactions_only)
         end
 
         -- autoformat on save
-        if client.supports_method("textDocument/formatting") then
+        if client:supports_method("textDocument/formatting") then
             vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = "autoformat_on_save",
@@ -51,13 +51,13 @@ CONFIGURE_LS_ON_ATTACH = function(codeactions_only)
             })
         end
 
-        if client.supports_method("textDocument/codeAction") then
+        if client:supports_method("textDocument/codeAction") then
             vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = "autoformat_on_save",
                 pattern = "*.go",
                 callback = function()
-                    local params = vim.lsp.util.make_range_params()
+                    local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
                     params.context = { only = { "source.organizeImports" } }
                     -- buf_request_sync defaults to a 1000ms timeout. Depending on your
                     -- machine and codebase, you may want longer. Add an additional
