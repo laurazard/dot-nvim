@@ -1,8 +1,22 @@
-CONFIGURE_LS_ON_ATTACH = function(autoformat)
+--- Corresponds to context.only param of the vim.lsp.buf.code_action request
+--- Use this to disable code actions, such as Go's "browse gopls documentation"
+---@param codeactions_only? string[]
+CONFIGURE_LS_ON_ATTACH = function(codeactions_only)
     --- @inlinedoc
     --- @param client vim.lsp.Client
     return function(client, bufnr)
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "code actions" })
+        local code_action_fn = function()
+            local opts = nil
+            if codeactions_only then
+                opts = {
+                    context = {
+                        only = codeactions_only
+                    }
+                }
+            end
+            vim.lsp.buf.code_action(opts)
+        end
+        vim.keymap.set("n", "<leader>ca", code_action_fn, { buffer = bufnr, desc = "code actions" })
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "run codelens" })
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "goto definition" })
         vim.keymap.set("n", "gi", function()
@@ -26,7 +40,7 @@ CONFIGURE_LS_ON_ATTACH = function(autoformat)
         end
 
         -- autoformat on save
-        if autoformat and client.supports_method("textDocument/formatting") then
+        if client.supports_method("textDocument/formatting") then
             vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = "autoformat_on_save",
@@ -227,8 +241,12 @@ return {
                 if lsp_config.capabilities then
                     TABLE_MERGE(specific_capabilities, lsp_config.capabilities)
                 end
+                local only = nil
+                if lsp_config.codeactions_only then
+                    only = lsp_config.codeactions_only
+                end
                 lsp_config.capabilities = specific_capabilities
-                lsp_config.on_attach = CONFIGURE_LS_ON_ATTACH(true)
+                lsp_config.on_attach = CONFIGURE_LS_ON_ATTACH(only)
                 require("lspconfig")[server_name].setup(lsp_config)
             end
         end,

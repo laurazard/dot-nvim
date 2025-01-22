@@ -55,6 +55,19 @@ return {
                             usePlaceholders = true,
                         },
                     },
+                    codeactions_only = {
+                        "source",
+                        "source.assembly",
+                        -- "source.doc", -- this one is responsible for the
+                        -- "browse gopls documentation" action
+                        "source.fixAll",
+                        "source.freesymbols",
+                        "source.organizeImports",
+                        -- "source.test", -- this causes the LSP to crash (maybe
+                        -- because the "test" codelens is disabled
+                        "quickfix",
+                        "refactor",
+                    },
                 },
                 golangci_lint_ls = {},
             }
