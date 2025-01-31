@@ -93,6 +93,14 @@ return {
     {
         "RRethy/vim-illuminate",
         event = { "BufReadPre", "BufNewFile" },
+        opts = {
+            filetypes_denylist = {
+                'c',
+            },
+        },
+        config = function(_, opts)
+            require('illuminate').configure(opts)
+        end
     },
 
     -- automatically add pair-closing brackets, etc.
