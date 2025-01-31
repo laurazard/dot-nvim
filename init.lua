@@ -26,6 +26,8 @@ DUMP = function(o)
     end
 end
 
+package.path = './lua/lib/?.lua;' .. package.path
+
 ADD_CMD = vim.api.nvim_create_user_command
 
 ADD_CMD("PrintAllWinOptions", function()
