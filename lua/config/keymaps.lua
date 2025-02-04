@@ -1,11 +1,5 @@
 map = vim.keymap.set
 
--- Tmux keybindings
-map("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", { desc = "TMUX Down" })
-map("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", { desc = "TMUX Up" })
-map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", { desc = "TMUX Left" })
-map("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", { desc = "TMUX Right" })
-
 -- navigate buffers with shift+H, shift+L
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
