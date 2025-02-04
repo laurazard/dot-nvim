@@ -54,7 +54,6 @@ require("config.filetypes")
 -- syncing to work properly with xquartz, for some reason
 vim.opt.clipboard = "unnamed"
 vim.wo.number = true
-vim.wo.cursorline = true
 
 vim.opt.tabstop = 4     -- Always 8 (see :h tabstop)
 vim.opt.softtabstop = 4 -- What you expecting
