@@ -86,6 +86,7 @@ vim.api.nvim_create_autocmd("User", {
         vim.cmd("Trouble loclist close")
         vim.cmd("Neotree close")
         vim.cmd("Neotest summary close")
+        require("edgy").close()
         require("dapui").close()
     end,
 })
@@ -134,7 +135,7 @@ vim.api.nvim_create_autocmd({ "WinNew", "WinLeave", "WinEnter", "BufAdd", "WinRe
     end,
 })
 
--- need this to be able to automatically comment tla files 
+-- need this to be able to automatically comment tla files
 vim.api.nvim_create_augroup("comment_tla", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = "comment_tla",
