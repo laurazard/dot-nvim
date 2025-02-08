@@ -54,7 +54,7 @@ return {
             bigfile = { enabled = false },
             dashboard = { enabled = false },
             indent = { enabled = false },
-            input = { enabled = false },
+            input = { enabled = true },
             notifier = { enabled = false },
             quickfile = { enabled = false },
             scroll = { enabled = false },
