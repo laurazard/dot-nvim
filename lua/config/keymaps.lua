@@ -1,4 +1,4 @@
-map = vim.keymap.set
+local map = vim.keymap.set
 
 -- navigate buffers with shift+H, shift+L
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
