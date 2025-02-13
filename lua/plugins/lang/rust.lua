@@ -39,8 +39,7 @@ return {
                     -- rust-analyzer language server configuration
                     ["rust-analyzer"] = {
                         cargo = {
-                            allFeatures = true,
-                            loadOutDirsFromCheck = true,
+                            allTargets = false,
                             buildScripts = {
                                 enable = true,
                             },
@@ -93,7 +92,7 @@ return {
                     },
                 },
                 on_attach = function(client, bufnr)
-                    CONFIGURE_LS_ON_ATTACH(true)(client, bufnr)
+                    CONFIGURE_LS_ON_ATTACH(nil)(client, bufnr)
                     vim.keymap.set("n", "<leader>dr", function()
                         vim.cmd.RustLsp("debuggables")
                     end, { desc = "Rust Debuggables", buffer = bufnr })
@@ -101,6 +100,49 @@ return {
             },
         },
         config = function(_, opts)
+            local diagnostics = {
+                underline = true,
+                update_in_insert = false,
+                virtual_text = {
+                    spacing = 4,
+                    source = "if_many",
+                    -- prefix = "●",
+                    -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+                    -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+                    prefix = "icons",
+                },
+                severity_sort = true,
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = " ",
+                        [vim.diagnostic.severity.WARN] = " ",
+                        [vim.diagnostic.severity.HINT] = " ",
+                        [vim.diagnostic.severity.INFO] = " ",
+                    },
+                },
+            }
+
+            -- diagnostics signs
+            if type(diagnostics.signs) ~= "boolean" then
+                for severity, icon in pairs(diagnostics.signs.text) do
+                    local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+                    name = "DiagnosticSign" .. name
+                    vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+                end
+            end
+
+            if type(diagnostics.virtual_text) == "table" and diagnostics.virtual_text.prefix == "icons" then
+                diagnostics.virtual_text.prefix = function(diagnostic)
+                    for d, icon in pairs(diagnostics.signs.text) do
+                        if diagnostic.severity == d then
+                            return icon
+                        end
+                    end
+                end
+            end
+
+            vim.diagnostic.config(vim.deepcopy(diagnostics))
+
             local package_path = require("mason-registry").get_package("codelldb"):get_install_path()
             local codelldb = package_path .. "/extension/adapter/codelldb"
             local library_path = package_path .. "/extension/lldb/lib/liblldb.dylib"
