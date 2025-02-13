@@ -191,7 +191,7 @@ return {
         }
     },
 
-    -- better messages/popup UI
+    -- better cmdline/notifications view
     {
         "folke/noice.nvim",
         event = "VeryLazy",
