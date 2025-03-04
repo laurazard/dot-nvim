@@ -181,16 +181,13 @@ return {
                     priority = 10000,
                 },
                 show_source = true,
-                throttle = 0,
+                throttle = 20,
                 -- Display all diagnostic messages on the cursor line
                 show_all_diags_on_cursorline = true,
 
                 -- Enable diagnostics in Insert mode
                 -- If enabled, it is better to set the `throttle` option to 0 to avoid visual artifacts
                 enable_on_insert = true,
-
-                -- Enable diagnostics in Select mode (e.g when auto inserting with Blink)
-                enable_on_select = true,
             },
             signs = {
                 left = "",
