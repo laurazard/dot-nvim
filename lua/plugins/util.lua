@@ -125,7 +125,7 @@ return {
                             },
                             {
                                 title = "Open Issues",
-                                cmd = "gh issue list -L 3",
+                                cmd = "gh issue list -L 3 || true",
                                 key = "i",
                                 action = function()
                                     vim.fn.jobstart("gh issue list --web", { detach = true })
