@@ -181,7 +181,7 @@ return {
                     priority = 10000,
                 },
                 show_source = true,
-                throttle = 20,
+                throttle = 0,
                 -- Display all diagnostic messages on the cursor line
                 show_all_diags_on_cursorline = true,
 
