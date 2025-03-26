@@ -72,11 +72,24 @@ return {
     -- file explorer
     {
         "nvim-neo-tree/neo-tree.nvim",
-        dependencies = { "jackielii/neo-tree-harpoon.nvim" },
-        lazy = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "jackielii/neo-tree-harpoon.nvim",
+            "MunifTanjim/nui.nvim"
+        },
+        --@module "neo-tree"
+        --@type neotree.Config?
         opts = {
             auto_clean_after_session_restore = true,
             close_if_last_window = true,
+            enable_diagnostics = false,
+            git_status_async = true,
+            git_status_async_options = {
+                batch_size = 1000, -- how many lines of git status results to process at a time
+                batch_delay = 30,  -- delay in ms between batches. Spreads out the workload to let other processes run.
+                max_lines = 10000, -- How many lines of git status results to process. Anything after this will be dropped.
+                -- Anything before this will be used. The last items to be processed are the untracked files.
+            },
             sources = { "filesystem", "buffers", "git_status", "harpoon-buffers" },
             source_selector = {
                 -- winbar = true,
@@ -104,6 +117,7 @@ return {
                     hide_dotfiles = false,
                     hide_gitignored = true,
                 },
+                check_gitignore_in_search = true
             },
         },
     },
