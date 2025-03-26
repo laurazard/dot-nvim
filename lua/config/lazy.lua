@@ -41,4 +41,10 @@ require("lazy").setup({
     },
     -- automatically check for plugin updates
     checker = { enabled = true, notify = false },
+    throttle = {
+        enabled = true, -- not enabled by default
+        -- max 2 ops every 5 seconds
+        rate = 2,
+        duration = 5 * 1000, -- in ms
+    },
 })
