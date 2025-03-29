@@ -8,6 +8,7 @@ return {
             -- A list of parser names, or "all" (the listed parsers MUST always be installed)
             local ensure_installed = {
                 "vimdoc",
+                "gitcommit",
                 "html",
                 "javascript",
                 "json",
