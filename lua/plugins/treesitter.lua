@@ -15,6 +15,7 @@ return {
                 "markdown_inline",
                 "query",
                 "regex",
+                "ssh_config",
                 "tsx",
                 "typescript",
                 "vim",
