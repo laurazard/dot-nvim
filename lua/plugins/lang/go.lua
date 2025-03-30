@@ -21,60 +21,6 @@ return {
     },
 
     {
-        "neovim/nvim-lspconfig",
-        opts = {
-            servers = {
-                gopls = {
-                    settings = {
-                        gopls = {
-                            verboseOutput = true,
-                            codelenses = {
-                                gc_details = true,
-                                run_govulncheck = true,
-                                -- test = true,
-                            },
-                            analyses = {
-                                fieldalignment = false,
-                                unusedparams = true,
-                                -- covered by golangci_lint_ls, and that one
-                                -- can ignore err/ok shadows
-                                shadow = false,
-                            },
-                            hints = {
-                                rangeVariableTypes = true,
-                                parameterNames = true,
-                                constantValues = true,
-                                assignVariableTypes = true,
-                                compositeLiteralFields = true,
-                                compositeLiteralTypes = true,
-                                functionTypeParameters = true,
-                            },
-                            staticcheck = true,
-                            gofumpt = true,
-                            semanticTokens = true,
-                            usePlaceholders = true,
-                        },
-                    },
-                    codeactions_only = {
-                        "source",
-                        "source.assembly",
-                        -- "source.doc", -- this one is responsible for the
-                        -- "browse gopls documentation" action
-                        "source.fixAll",
-                        "source.freesymbols",
-                        "source.organizeImports",
-                        -- "source.test", -- this causes the LSP to crash (maybe
-                        -- because the "test" codelens is disabled
-                        "quickfix",
-                        "refactor",
-                    },
-                },
-                golangci_lint_ls = {},
-            }
-        },
-    },
-
-    {
         "nvim-neotest/neotest",
         dependencies = { "fredrikaverpil/neotest-golang" },
         opts = {

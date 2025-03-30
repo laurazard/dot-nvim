@@ -15,14 +15,6 @@ return {
     {
         "ranjithshegde/ccls.nvim",
         event = "LazyFile",
-        opts = {
-            lsp = {
-                disable_capabilities = {
-                    -- completionProvider = true,
-                },
-                -- disable_diagnostics = true,
-            },
-        },
         config = function(_, opts)
             opts = opts or {}
             opts.lsp = opts.lsp or {}
@@ -39,7 +31,6 @@ return {
                         directory = vim.fs.normalize "~/.cache/ccls" -- if on nvim 0.8 or higher
                     }
                 },
-                on_attach = CONFIGURE_LS_ON_ATTACH(nil),
             }
             opts.lsp.lspconfig = server_config
             require("ccls").setup(opts)

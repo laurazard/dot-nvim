@@ -17,24 +17,6 @@ return {
         end
     },
 
-    {
-        "neovim/nvim-lspconfig",
-        opts = {
-            servers = {
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { 'vim', 'require' },
-                                disable = { "missing-fields" },
-                            }
-                        }
-                    },
-                }
-            },
-        },
-    },
-
     -- for configuring the neovim config
     {
         "folke/lazydev.nvim",

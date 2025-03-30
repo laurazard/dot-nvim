@@ -31,13 +31,4 @@ return {
             return opts
         end
     },
-
-    {
-        "neovim/nvim-lspconfig",
-        opts = {
-            servers = {
-                bashls = {}
-            }
-        },
-    },
 }

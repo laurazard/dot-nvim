@@ -49,6 +49,7 @@ require("config.lazy")
 require("config.keymaps")
 require("config.autocmds")
 require("config.filetypes")
+require("config.lsp")
 
 -- use unnamed clipboard ('*'): required for clipboard
 -- syncing to work properly with xquartz, for some reason
