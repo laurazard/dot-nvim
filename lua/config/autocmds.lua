@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("User", {
         local name = vim.api.nvim_buf_get_name(bufnr)
 
         if name == "" then
-            vim.cmd("Dashboard")
+            require("snacks").dashboard()
         end
     end,
 })
