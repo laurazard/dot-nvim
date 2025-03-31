@@ -5,6 +5,8 @@ return {
     root_markers = {
         'go.mod',
         'go.sum',
+        'vendor.mod',
+        'vendor.sum',
     },
     settings = {
         gopls = {

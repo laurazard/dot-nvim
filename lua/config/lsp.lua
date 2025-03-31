@@ -42,11 +42,48 @@ end
 vim.diagnostic.config(vim.deepcopy(diagnostics))
 
 vim.api.nvim_create_augroup("autoformat_on_save", { clear = true })
+local create_autoformat_on_save_autocmd = function(client, bufnr)
+    vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        group = "autoformat_on_save",
+        buffer = bufnr,
+        callback = function()
+            local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
+            params.context = { only = { "source.organizeImports" } }
+            -- params.context = { only = { "source.sortImports" } }
+
+            -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+            -- machine and codebase, you may want longer. Add an additional
+            -- argument after params if you find that you have to write the file
+            -- twice for changes to be saved.
+            -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+            local result = client:request_sync("textDocument/codeAction", params)
+            -- local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+            for _, r in pairs(result or {}) do
+                if r.edit then
+                    local enc = client.offset_encoding or "utf-16"
+                    vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                end
+            end
+            vim.lsp.buf.format({ async = false })
+        end
+    })
+end
+
+local create_autoformat_on_save_autocmd_without_source = function(client, bufnr)
+    vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        group = "autoformat_on_save",
+        buffer = bufnr,
+        callback = function()
+            vim.lsp.buf.format()
+        end,
+    })
+end
 
 vim.api.nvim_create_autocmd("LspAttach", {
     desc = "LSP actions",
     callback = function(event)
-        -- local opts = { buffer = event.buf }
         local bufnr = event.buf
         local client_id = event.data.client_id
         local client = vim.lsp.get_client_by_id(client_id)
@@ -73,51 +110,42 @@ vim.api.nvim_create_autocmd("LspAttach", {
             { buffer = bufnr, desc = "open diagnostics for line" })
 
         -- autoformat on save
-        if client:supports_method("textDocument/formatting") and not (client.name == "clangd" or client.name == "ccls") then
-            vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                group = "autoformat_on_save",
-                buffer = bufnr,
-                callback = function()
-                    vim.lsp.buf.format()
-                end,
-            })
+        if client:supports_method("textDocument/formatting") then
+            if client:supports_method("textDocument/codeAction") then
+                create_autoformat_on_save_autocmd(client, bufnr)
+                local autoformat_on_save_enabled = true
+                vim.api.nvim_buf_create_user_command(0, "OrganizeSourcesOnSave", function()
+                    if not autoformat_on_save_enabled then
+                        require("notify")("disabled source organize on save ")
+                        create_autoformat_on_save_autocmd(client, bufnr)
+                    else
+                        require("notify")("enabled source organize on save ")
+                        create_autoformat_on_save_autocmd_without_source(client, bufnr)
+                    end
+                    autoformat_on_save_enabled = not autoformat_on_save_enabled
+                end, {})
+            else
+                create_autoformat_on_save_autocmd_without_source()
+            end
         end
 
-        if client:supports_method("textDocument/codeAction") and not (client.name == "clangd" or client.name == "ccls") then
-            vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                group = "autoformat_on_save",
-                pattern = "*.go",
+        -- inlay hints
+        if client:supports_method("textDocument/inlayHint") then
+            vim.lsp.inlay_hint.enable(true)
+        end
+
+        -- code lens
+        if client:supports_method("textDocument/codeLens") then
+            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+                buffer = bufnr,
                 callback = function()
-                    local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
-                    params.context = { only = { "source.organizeImports" } }
-                    -- buf_request_sync defaults to a 1000ms timeout. Depending on your
-                    -- machine and codebase, you may want longer. Add an additional
-                    -- argument after params if you find that you have to write the file
-                    -- twice for changes to be saved.
-                    -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-                    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-                    for cid, res in pairs(result or {}) do
-                        for _, r in pairs(res.result or {}) do
-                            if r.edit then
-                                local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-                                vim.lsp.util.apply_workspace_edit(r.edit, enc)
-                            end
-                        end
-                    end
-                    vim.lsp.buf.format({ async = false })
+                    vim.lsp.codelens.refresh()
                 end
             })
         end
 
-        -- inlay hints
-        if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(true)
-        end
-
         -- semantic token highlighting
-        if client.server_capabilities.semanticTokensProvider and not (client.name == "clangd" or client.name == "ccls") then
+        if client:supports_method("textDocument/semanticTokens/full") then
             -- remap colorscheme highlight groups for semantic tokens
             local links = {
                 -- ['@lsp.type.namespace'] = '@namespace',
@@ -141,17 +169,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
             end
 
             vim.lsp.semantic_tokens.start(bufnr, client.id)
-        end
-
-        -- code lens
-        if not (client.name == "clangd" or client.name == "ccls") then
-            vim.lsp.codelens.refresh()
-            vim.api.nvim_create_autocmd({ "BufWritePre", "BufEnter", "CursorHold", "InsertLeave" }, {
-                buffer = bufnr,
-                callback = function()
-                    vim.lsp.codelens.refresh()
-                end
-            })
         end
     end,
 })

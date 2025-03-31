@@ -39,29 +39,15 @@ return {
 
     {
         "williamboman/mason-lspconfig.nvim",
-        -- event = "LazyFile",
         dependencies = { "williamboman/mason.nvim" },
         config = function(_, opts)
-            -- dump = function(o)
-            --     if type(o) == 'table' then
-            --         local s = '{ '
-            --         for k, v in pairs(o) do
-            --             if type(k) ~= 'number' then k = '"' .. k .. '"' end
-            --             s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-            --         end
-            --         return s .. '} '
-            --     else
-            --         return tostring(o)
-            --     end
-            -- end
-            -- require("notify")(dump(opts))
             require("mason-lspconfig").setup(opts)
         end
     },
 
     {
         "neovim/nvim-lspconfig",
-        event = 'LazyFile',
+        lazy = true,
         dependencies = { "williamboman/mason-lspconfig.nvim" },
     },
 
