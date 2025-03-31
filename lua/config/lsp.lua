@@ -72,13 +72,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float,
             { buffer = bufnr, desc = "open diagnostics for line" })
 
-        -- workaround for formatting w/ yamlls
-        -- FIXME: extract this from generic on_attach func and make configurable
-        -- see: https://github.com/LazyVim/LazyVim/commit/7f5051ef72cfe66eb50ddb7c973714aa8aea04ec
-        if client.name == "yamlls" then
-            client.server_capabilities.documentFormattingProvider = true
-        end
-
         -- autoformat on save
         if client:supports_method("textDocument/formatting") and not (client.name == "clangd" or client.name == "ccls") then
             vim.api.nvim_clear_autocmds({ group = "autoformat_on_save", buffer = bufnr })
@@ -178,7 +171,6 @@ local capabilities = {
 capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 -- Setup language servers.
-
 vim.lsp.config("*", {
     capabilities = capabilities,
     root_markers = { ".git" },

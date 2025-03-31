@@ -20,4 +20,11 @@ return {
             schemas = require("schemastore").yaml.schemas()
         },
     },
+    -- workaround for formatting w/ yamlls
+    -- FIXME: extract this from generic on_attach func and make configurable
+    -- see: https://github.com/LazyVim/LazyVim/commit/7f5051ef72cfe66eb50ddb7c973714aa8aea04ec
+    on_init = function(_, init_result)
+        local new_capabilities = init_result.capabilities
+        new_capabilities.documentFormattingProvider = true
+    end
 }
