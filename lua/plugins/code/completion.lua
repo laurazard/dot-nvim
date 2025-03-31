@@ -152,17 +152,11 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 -- remember to enable your providers here
-                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
+                default = { 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
                 providers = {
                     orgmode = {
                         name = 'Orgmode',
                         module = 'orgmode.org.autocompletion.blink',
-                    },
-                    lazydev = {
-                        name = "LazyDev",
-                        module = "lazydev.integrations.blink",
-                        -- make lazydev completions top priority (see `:h blink.cmp`)
-                        score_offset = 100,
                     },
                 }
             }

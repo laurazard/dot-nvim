@@ -8,7 +8,12 @@ return {
             diagnostics = {
                 globals = { 'vim', 'require' },
                 disable = { "missing-fields" },
-            }
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files and plugins
+                library = { vim.env.VIMRUNTIME },
+                checkThirdParty = false,
+            },
         }
     },
 }
