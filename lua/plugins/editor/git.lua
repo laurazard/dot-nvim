@@ -52,7 +52,7 @@ return {
                             function()
                                 gs.reset_buffer()
                             end,
-                            desc = "stage buffer",
+                            desc = "reset buffer",
                             mode = "n"
                         },
                         { "<leader>gh", group = "hunk" },
