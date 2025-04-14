@@ -169,7 +169,7 @@ return {
         end,
         keys = {
             {
-                "≥", -- Alt-.
+                "<A-.>", -- Alt-.
                 mode = { "i" },
                 function()
                     require("blink.cmp").show()
