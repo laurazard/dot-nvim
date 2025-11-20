@@ -154,7 +154,6 @@ return {
     -- status (bottom) line
     {
         'nvim-lualine/lualine.nvim',
-        event = { "BufReadPre", "BufNewFile" },
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
