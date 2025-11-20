@@ -46,12 +46,6 @@ return {
     },
 
     {
-        "neovim/nvim-lspconfig",
-        lazy = true,
-        dependencies = { "williamboman/mason-lspconfig.nvim" },
-    },
-
-    {
         "VidocqH/lsp-lens.nvim",
         opts = function(_, opts)
             opts.sections = {
