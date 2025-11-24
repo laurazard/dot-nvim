@@ -19,11 +19,13 @@ return {
             local toggle_neotree = function()
                 require("neo-tree")
                 if not neotree_open then
-                    vim.cmd("Neotree show")
+                    -- vim.cmd("Neotree show")
+                    vim.cmd("Fyler kind=split_left")
                     vim.cmd("Neotree show position=right git_status")
                     vim.cmd("Neotree show position=top harpoon-buffers")
                 else
                     vim.cmd("Neotree close")
+                    require("fyler").close()
                 end
                 neotree_open = not neotree_open
             end

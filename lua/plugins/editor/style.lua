@@ -16,6 +16,7 @@ return {
                 },
                 overrides = function(colors)
                     local theme = colors.theme
+                    local palette_colors = colors.palette
                     local makeDiagnosticColor = function(color)
                         local c = require("kanagawa.lib.color")
                         return { fg = color, bg = c(color):blend(theme.ui.bg, 0.95):to_hex() }
@@ -91,6 +92,15 @@ return {
                         TroubleAlt                           = { bg = theme.ui.bg_m3 },
 
                         MeowBork                             = { fg = theme.ui.bg_dim, bg = theme.ui.bg_dim },
+
+                        FylerNormal                          = { fg = theme.ui.fg_dim },
+
+                        FylerGitAdded                        = { fg = theme.vcs.added },
+                        FylerGitConflict                     = { fg = theme.diag.error },
+                        FylerGitDeleted                      = { fg = theme.vcs.removed },
+                        FylerGitIgnored                      = { fg = palette_colors.fujiGray },
+                        FylerGitModified                     = { fg = theme.vcs.changed },
+                        FylerGitRenamed                      = { fg = theme.vcs.changed },
 
                         -- BlinkCmpMenu                         = { bg = theme.ui.bg_p2 },
                         -- BlinkCmpMenuSelection                = { bg = theme.ui.bg_p1 },

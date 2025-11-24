@@ -69,6 +69,22 @@ return {
         end,
     },
 
+    {
+        "A7Lavinraj/fyler.nvim",
+        dependencies = { "nvim-mini/mini.icons" },
+        branch = "main", -- Use stable branch for production
+        opts = {
+            views = {
+                finder = {
+                    close_on_select = false,
+                },
+            },
+        },
+        config = function(_, opts)
+            require("fyler").setup(opts)
+        end,
+    },
+
     -- file explorer
     {
         "nvim-neo-tree/neo-tree.nvim",
@@ -134,10 +150,10 @@ return {
                 options = {
                     offsets = {
                         {
-                            filetype = "neo-tree",
-                            text = "Neo-Tree",
+                            filetype = "fyler",
+                            text = "Explorer",
                             separator = true,
-                            text_align = "left",
+                            text_align = "center",
                         },
                     },
                     diagnostics = "nvim_lsp",
@@ -257,11 +273,14 @@ return {
                     -- Neo-tree filesystem always takes half the screen height
                     {
                         title = "File System",
-                        ft = "neo-tree",
-                        filter = function(buf)
-                            return vim.b[buf].neo_tree_source == "filesystem"
-                        end,
-                        size = { height = 0.5, width = .25 },
+                        ft = "fyler",
+                        -- filter = function(buf)
+                        --     return vim.b[buf].neo_tree_source == "filesystem"
+                        -- end,
+                        pinned = true,
+                        open = "Fyler kind=split_left",
+                        collapsed = false,
+                        size = { height = 0.5, width = 0.2 },
                     },
                     {
                         title = "Harpoon Buffers",
