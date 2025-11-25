@@ -63,30 +63,6 @@ vim.opt.expandtab = true
 vim.opt.undofile = true
 vim.opt.ignorecase = true
 
-vim.opt.fillchars = {
-    horiz     = '_',
-    horizup   = '_',
-    horizdown = '_',
-    vert      = '▕',
-    vertleft  = '▕',
-    vertright = '▕',
-    verthoriz = '▕',
-    diff      = '╱',
-}
-
--- vim.opt.fillchars = {
---     horiz     = '━',
---     horizup   = '┻',
---     horizdown = '┳',
---     vert      = '┃',
---     vertleft  = '┫',
---     vertright = '┣',
---     verthoriz = '╋',
---     diff      = '╱',
--- }
-
--- { "🭽", "▔", "🭾", "▕", "🭿", "", "🭼", "▏" }
-
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = 'nc'
 
