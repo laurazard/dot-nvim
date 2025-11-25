@@ -93,7 +93,8 @@ return {
 
                         MeowBork                             = { fg = theme.ui.bg_dim, bg = theme.ui.bg_dim },
 
-                        FylerNormal                          = { fg = theme.ui.fg_dim },
+                        FylerNormal                          = { fg = theme.ui.fg },
+                        FylerFSDirectoryName                 = { fg = palette_colors.crystalBlue },
 
                         FylerGitAdded                        = { fg = theme.vcs.added },
                         FylerGitConflict                     = { fg = theme.diag.error },
