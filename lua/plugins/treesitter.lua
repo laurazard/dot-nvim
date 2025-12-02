@@ -54,28 +54,19 @@ return {
             return opts
         end,
         config = function(_, opts)
-            -- dump = function(o)
-            --     if type(o) == 'table' then
-            --         local s = '{ '
-            --         for k, v in pairs(o) do
-            --             if type(k) ~= 'number' then k = '"' .. k .. '"' end
-            --             s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-            --         end
-            --         return s .. '} '
-            --     else
-            --         return tostring(o)
-            --     end
-            -- end
-            -- require("notify")(dump(opts.ensure_installed))
-
             for ft, parser in pairs(opts.extra_mappings) do
-                -- require("notify")(ft .. " " .. parser)
                 vim.treesitter.language.register(parser, ft)
             end
             opts.extra_mappings = nil
 
             require 'nvim-treesitter.configs'.setup(opts)
         end
+    },
+
+    -- additional textobjects for treesitter
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
     },
 
     {

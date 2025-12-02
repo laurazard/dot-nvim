@@ -1,3 +1,34 @@
+local completion_kind_icons =
+{
+    Text = "󰉿 ",
+    Method = "󰆧 ",
+    Function = "󰊕 ",
+    Constructor = " ",
+    Field = " ",
+    Variable = "󰀫 ",
+    Class = "󰠱 ",
+    Interface = " ",
+    Module = " ",
+    Property = "󰜢 ",
+    Unit = "󰑭 ",
+    Value = "󰎠 ",
+    Enum = " ",
+    Keyword = "󰌋 ",
+    Snippet = " ",
+    Color = "󰏘 ",
+    File = "󰈙 ",
+    Reference = " ",
+    Folder = "󰉋 ",
+    EnumMember = " ",
+    Constant = "󰏿 ",
+    Struct = " ",
+    Event = " ",
+    Operator = "󰆕 ",
+    TypeParameter = " ",
+    Misc = " ",
+    Copilot = " ",
+}
+
 return {
     {
         "xzbdmw/colorful-menu.nvim",
@@ -35,6 +66,7 @@ return {
         dependencies = {
             -- optional: provides snippets for the snippet source
             'rafamadriz/friendly-snippets',
+            'fang2hou/blink-copilot',
         },
 
         -- use a release tag to download pre-built binaries
@@ -60,6 +92,9 @@ return {
 
                 ['<Tab>'] = {
                     'select_next',
+                    function() -- sidekick next edit suggestion
+                        return require("sidekick").nes_jump_or_apply()
+                    end,
                     'fallback'
                 },
                 ['<S-Tab>'] = {
@@ -96,7 +131,14 @@ return {
                             kind_icon = {
                                 ellipsis = false,
                                 text = function(ctx)
-                                    local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+                                    local kind_icon, _, is_default = require('mini.icons').get('lsp', ctx.kind)
+                                    if is_default then
+                                        local fallback_kind_icon = completion_kind_icons[ctx.kind]
+                                        if fallback_kind_icon ~= nil then
+                                            kind_icon = fallback_kind_icon
+                                        end
+                                    end
+
                                     return kind_icon
                                 end,
                             },
@@ -117,46 +159,24 @@ return {
                 use_nvim_cmp_as_default = true,
                 -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
                 -- Adjusts spacing to ensure icons are aligned
-                nerd_font_variant = 'mono',
-                kind_icons = {
-                    Text = "󰉿",
-                    Method = "󰆧",
-                    Function = "󰊕",
-                    Constructor = "",
-                    Field = " ",
-                    Variable = "󰀫",
-                    Class = "󰠱",
-                    Interface = "",
-                    Module = "",
-                    Property = "󰜢",
-                    Unit = "󰑭",
-                    Value = "󰎠",
-                    Enum = "",
-                    Keyword = "󰌋",
-                    Snippet = "",
-                    Color = "󰏘",
-                    File = "󰈙",
-                    Reference = "",
-                    Folder = "󰉋",
-                    EnumMember = "",
-                    Constant = "󰏿",
-                    Struct = "",
-                    Event = "",
-                    Operator = "󰆕",
-                    TypeParameter = " ",
-                    Misc = " ",
-                }
+                nerd_font_variant = 'mono'
             },
 
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 -- remember to enable your providers here
-                default = { 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
+                default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
                 providers = {
                     orgmode = {
                         name = 'Orgmode',
                         module = 'orgmode.org.autocompletion.blink',
+                    },
+                    copilot = {
+                        name = "copilot",
+                        module = "blink-copilot",
+                        score_offset = 100,
+                        async = true,
                     },
                 }
             }
