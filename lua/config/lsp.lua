@@ -197,6 +197,7 @@ vim.lsp.config("*", {
 vim.lsp.enable({
     "basedpyright",
     "bashls",
+    "copilot",
     "dockerls",
     "golangci_lint_ls",
     "gopls",
