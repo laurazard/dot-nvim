@@ -96,20 +96,7 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_augroup("style-neotest", { clear = true })
 vim.api.nvim_create_autocmd({ "WinNew", "WinLeave", "WinEnter", "BufAdd", "WinResized" }, {
     group = "style-neotest",
-    callback = function(event)
-        -- dump = function(o)
-        --     if type(o) == 'table' then
-        --         local s = '{ '
-        --         for k, v in pairs(o) do
-        --             if type(k) ~= 'number' then k = '"' .. k .. '"' end
-        --             s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-        --         end
-        --         return s .. '} '
-        --     else
-        --         return tostring(o)
-        --     end
-        -- end
-
+    callback = function()
         vim.api.nvim_set_hl(2, "Normal", { link = "TroubleNormalNC" })
         vim.api.nvim_set_hl(2, "EndOfBuffer", { link = "MeowBork" })
         vim.api.nvim_set_hl(2, "EdgyWinBar", { link = "MeowBork" })
