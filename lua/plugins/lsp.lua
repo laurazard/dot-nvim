@@ -97,7 +97,7 @@ return {
 
                 -- Enable diagnostics in Insert mode
                 -- If enabled, it is better to set the `throttle` option to 0 to avoid visual artifacts
-                enable_on_insert = true,
+                enable_on_insert = false,
             },
             signs = {
                 left = "",
@@ -108,5 +108,5 @@ return {
             vim.diagnostic.config({ virtual_text = false })
             require('tiny-inline-diagnostic').setup(opts)
         end
-    }
+    },
 }
