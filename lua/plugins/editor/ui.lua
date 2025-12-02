@@ -448,4 +448,49 @@ return {
             vim.keymap.set("n", "<leader>hd", function() harpoon:list():remove() end)
         end
     },
+
+    {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        opts = function()
+            local function conceal_tag(icon, hl_group)
+                return {
+                    on_node = { hl_group = hl_group },
+                    on_closing_tag = { conceal = '' },
+                    on_opening_tag = {
+                        conceal = '',
+                        virt_text_pos = 'inline',
+                        virt_text = { { icon .. ' ', hl_group } },
+                    },
+                }
+            end
+
+            local md_heading_settings = require('markview.presets').headings.marker
+            md_heading_settings.shift_width = 1
+
+            return {
+                preview = {
+                    filetypes = { "markdown", "codecompanion" },
+                    ignore_buftypes = {},
+                },
+                markdown = {
+                    headings = md_heading_settings,
+                },
+                html = {
+                    container_elements = {
+                        ['^buf$']         = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^file$']        = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^help$']        = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
+                        ['^image$']       = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^symbols$']     = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^url$']         = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
+                        ['^var$']         = conceal_tag('', 'CodeCompanionChatVariable'),
+                        ['^tool$']        = conceal_tag('', 'CodeCompanionChatTool'),
+                        ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
+                        ['^group$']       = conceal_tag('', 'CodeCompanionChatToolGroup'),
+                    },
+                },
+            }
+        end,
+    },
 }
