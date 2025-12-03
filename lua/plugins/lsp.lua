@@ -50,7 +50,7 @@ return {
         opts = function(_, opts)
             opts.sections = {
                 definition = true,
-                git_authors = true,
+                git_authors = false, -- causing TONS of performance issues on large .pb.go files
             }
             local SymbolKind = vim.lsp.protocol.SymbolKind
             opts.target_symbol_kinds = {

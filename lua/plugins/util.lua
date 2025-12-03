@@ -51,7 +51,7 @@ return {
         lazy = false,
         ---@type snacks.Config
         opts = {
-            bigfile = { enabled = false },
+            bigfile = { enabled = true },
             dashboard = {
                 enabled = true,
                 preset = {
