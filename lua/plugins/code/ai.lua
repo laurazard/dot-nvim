@@ -1,6 +1,7 @@
 return {
     {
         "zbirenbaum/copilot.lua",
+        enabled = false,
         cmd = "Copilot",
         event = "InsertEnter",
         opts = {
@@ -23,6 +24,7 @@ return {
 
     {
         "folke/sidekick.nvim",
+        enabled = false,
         opts = {
             cli = {
                 mux = {

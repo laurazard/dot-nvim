@@ -66,7 +66,7 @@ return {
         dependencies = {
             -- optional: provides snippets for the snippet source
             'rafamadriz/friendly-snippets',
-            'fang2hou/blink-copilot',
+            -- 'fang2hou/blink-copilot',
         },
 
         -- use a release tag to download pre-built binaries
@@ -166,7 +166,8 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 -- remember to enable your providers here
-                default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
+                -- default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
+                default = { 'lsp', 'path', 'snippets', 'buffer', 'orgmode' },
                 providers = {
                     orgmode = {
                         name = 'Orgmode',
