@@ -97,10 +97,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { buffer = bufnr, desc = "run codelens" })
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "goto definition" })
         vim.keymap.set("n", "gi", function()
-            require("telescope.builtin").lsp_implementations()
+            require("fzf-lua").lsp_implementations()
         end, { buffer = bufnr, desc = "goto implementations" })
         vim.keymap.set("n", "gr", function()
-            require('telescope.builtin').lsp_references()
+            require("fzf-lua").lsp_references()
             -- TODO: new thing to do this but in quickfix window
         end, { buffer = bufnr, desc = "find references" })
         vim.keymap.set("n", "<leader>cr", function()

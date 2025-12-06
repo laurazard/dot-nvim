@@ -93,6 +93,7 @@ return {
     },
     {
         "nvim-orgmode/telescope-orgmode.nvim",
+        enable = false,
         event = "VeryLazy",
         dependencies = {
             "nvim-orgmode/orgmode",

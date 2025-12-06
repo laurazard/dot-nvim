@@ -45,7 +45,7 @@ return {
                 {
                     "<leader>fb",
                     function()
-                        require('telescope.builtin').buffers()
+                        require('fzf-lua').buffers()
                     end,
                     desc = "find buffers",
                     mode = "n"
@@ -53,7 +53,7 @@ return {
                 {
                     "<leader>ff",
                     function()
-                        require('telescope.builtin').find_files()
+                        require('fzf-lua').files()
                     end,
                     desc = "find files",
                     mode = "n"
@@ -84,7 +84,7 @@ return {
                 {
                     "<leader>/",
                     function()
-                        require('telescope.builtin').live_grep()
+                        require('fzf-lua').live_grep()
                     end,
                     desc = "live grep",
                     icon = {
@@ -97,7 +97,7 @@ return {
                 { "<leader>n", group = "notifications" },
                 {
                     "<leader>nn",
-                    "<cmd>Telescope notify<cr>",
+                    "<cmd>Noice fzf<cr>",
                     desc = "notifications",
                 },
                 {
