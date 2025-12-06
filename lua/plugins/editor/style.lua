@@ -37,6 +37,11 @@ return {
                         TelescopePreviewNormal               = { bg = theme.ui.bg_dim },
                         TelescopePreviewBorder               = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
 
+                        FzfLuaBorder                         = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+                        FzfLuaTitle                          = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+                        FzfLuaPreviewBorder                  = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+                        FzfLuaFzfPrompt                      = { bg = theme.ui.bg_p1 },
+
                         -- transparent floating windows
                         NormalFloat                          = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
                         -- NormalFloat                = { bg = "none" },
