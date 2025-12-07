@@ -122,6 +122,14 @@ return {
             },
         },
         config = function(_, opts)
+            if vim.fn.executable('bat') == 0 then
+                require("notify")("Failed to find `bat` binary. Please install!")
+
+                opts.winopts.preview = {
+                    border = "none"
+                }
+            end
+
             local config = require("fzf-lua.config")
             local actions = require("trouble.sources.fzf").actions
             config.defaults.actions.files["ctrl-t"] = actions.open
