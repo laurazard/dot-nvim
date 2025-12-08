@@ -23,6 +23,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         opts = {
             -- add any custom options here
+            need = 2,
         }
     },
 
